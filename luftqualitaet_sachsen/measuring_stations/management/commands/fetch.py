@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from cStringIO import StringIO
 
 import gevent.monkey
 import requests
 from bs4 import BeautifulSoup
-from gevent.pool import Pool
-
 from django.core.management.base import BaseCommand
-
-from cStringIO import StringIO
+from gevent.pool import Pool
 
 
 class Command(BaseCommand):
