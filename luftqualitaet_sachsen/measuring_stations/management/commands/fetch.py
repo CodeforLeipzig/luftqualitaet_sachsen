@@ -2,16 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from datetime import datetime
 
 import gevent.monkey
 import requests
 from bs4 import BeautifulSoup
 from gevent.pool import Pool
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from cStringIO import StringIO
+
 
 class Command(BaseCommand):
     args = '<period {24H|48H|7D|1M|3M|6M|1Y}>'
@@ -75,9 +75,9 @@ class Command(BaseCommand):
         if len(args) < 1 or not(args[0] in self.ZEITRAUM.keys()):
             self.stdout.write("Usage: manage.py fetch {24H|48H|7D|1M|3M|6M|1Y}")
             sys.exit(0)
-        
+
         gevent.monkey.patch_socket()
-        
+
         stationPool = Pool(len(self.STATIONEN))
         params = {}
         response = requests.post(self.URL, params)
@@ -92,7 +92,6 @@ class Command(BaseCommand):
             stationPool.spawn(self.fetchStation, tmp, args[0])
 
         stationPool.join()
-
 
     def fetchStation(self, params, period):
         response = requests.post(self.URL, params)
@@ -109,13 +108,13 @@ class Command(BaseCommand):
 
         schadstoffPool.join()
 
-
     def fetchSchadstoff(self, params, period):
             response = requests.post(self.URL, params)
             soup = BeautifulSoup(response.text)
             params[self.VALIDATION_KEY] = soup.find_all(id=self.VALIDATION_KEY)[0]['value']
             params[self.VIEWSTATE_KEY] = soup.find_all(id=self.VIEWSTATE_KEY)[0]['value']
-            params[self.MITTELWERT_KEY] = self.MITTELWERT[self.MITTELWERT_SCHADSTOFF_MAP[params[self.SCHADSTOFF_KEY]]]
+            params[self.MITTELWERT_KEY] = self.MITTELWERT[
+                self.MITTELWERT_SCHADSTOFF_MAP[params[self.SCHADSTOFF_KEY]]]
             params[self.ZEITRAUM_KEY] = 0
             params[self.TARGET_KEY] = self.MITTELWERT_KEY
 
@@ -135,9 +134,6 @@ class Command(BaseCommand):
             response = requests.post(self.URL, params)
 
             if response.status_code == 200:
-                #with open(datetime.now().isoformat() + "_"
-                  #      + params[self.STATION_KEY] + "_"
-                   #     + params[self.SCHADSTOFF_KEY], 'wb') as f:
                 f = StringIO()
                 for chunk in response.iter_content(1024):
                     f.write(chunk)
