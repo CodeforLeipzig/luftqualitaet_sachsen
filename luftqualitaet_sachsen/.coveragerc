@@ -1,0 +1,4 @@
+[run]
+branch = True
+source = .
+omit = *test*, *migrations*, manage.py, luftqualitaet_sachsen/config/settings*, *urls.py, luftqualitaet_sachsen/config/*wsgi*.py

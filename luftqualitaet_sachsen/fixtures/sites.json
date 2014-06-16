@@ -1,0 +1,10 @@
+[
+{
+    "pk": 1,
+    "model": "sites.site",
+    "fields": {
+        "domain": "www.example.com",
+        "name": "Luftqualität Sachsen"
+    }
+}
+]
