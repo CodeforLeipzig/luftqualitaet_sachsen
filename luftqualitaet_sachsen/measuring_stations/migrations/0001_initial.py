@@ -1,9 +1,9 @@
 # encoding: utf8
 from __future__ import unicode_literals
 
-from django.db import models, migrations
-import uuidfield.fields
 import geoposition.fields
+import uuidfield.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
