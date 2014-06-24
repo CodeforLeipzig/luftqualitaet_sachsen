@@ -46,6 +46,7 @@ class MeasuringPoint(models.Model):
     class Meta:
         verbose_name = 'Messstelle'
         verbose_name_plural = 'Messstellen'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
