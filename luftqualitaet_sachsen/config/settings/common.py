@@ -163,6 +163,7 @@ class Common(Configuration):
         'crispy_forms',
         'measuring_stations',
         'geoposition',
+        'leaflet',
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -177,6 +178,14 @@ class Common(Configuration):
     EMAIL_SUBJECT_PREFIX = '[Luftqualität Sachsen]'
     DEFAULT_FROM_EMAIL = 'noreply@example.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+    LEAFLET_CONFIG = {
+        'DEFAULT_CENTER': (50.9280361, 13.456666),
+        'DEFAULT_ZOOM': 8,
+        'MIN_ZOOM': 3,
+        'MAX_ZOOM': 18,
+        'RESET_VIEW': False,
+    }
 
 
 class Public(Email, Common):

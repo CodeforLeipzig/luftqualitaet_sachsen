@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load leaflet_tags static %}
+
+{% block css %}
+    <style>
+        .leaflet-container {  /* all maps */
+            width:  100%;
+            height: 500px;
+        }
+    </style>
+{% endblock css %}
+
+{% block js %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        window.addEventListener("map:init", function (e) {
+            var detail = e.detail;
+            {% for marker in measuring_points %}
+                {% if marker.position.latitude %}
+                    L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
+                        .addTo(detail.map).bindPopup(
+                            "<p>{{ marker.name }}</p>"
+                            + "<p>{{ marker.location }}</p>{% if marker.image %}"
+                            + "<img src=\"{% static marker.image %}\"> {% endif %}"
+                    );
+                {% endif %}
+            {% endfor %}
+        }, false);
+    </script>
+
+
+
+{% endblock js %}
+
+{% block content %}
+    <div class="content">
+        <h1>Übersicht</h1>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        {% leaflet_map "start_map" %}
+    </div>
+{% endblock content %}
