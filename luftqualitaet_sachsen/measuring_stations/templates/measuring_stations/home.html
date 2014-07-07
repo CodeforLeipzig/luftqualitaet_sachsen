@@ -24,6 +24,9 @@
                             "<p>{{ marker.name }}</p>"
                             + "<p>{{ marker.location }}</p>{% if marker.image %}"
                             + "<img src=\"{% static marker.image %}\"> {% endif %}"
+                            + "<p>{{ marker.amsl }}</p>"
+                            + "<p>{{ marker.get_eu_typing_display }}</p>"
+                            + "<p>{{ marker.get_category_display }}</p>"
                     );
                 {% endif %}
             {% endfor %}
