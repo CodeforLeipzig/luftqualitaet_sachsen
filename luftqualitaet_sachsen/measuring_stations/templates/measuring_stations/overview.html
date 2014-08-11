@@ -16,22 +16,27 @@
 {% block js %}
     {{ block.super }}
     <script type="text/javascript">
+        var marker = [];
+
         window.addEventListener("map:init", function (e) {
             var detail = e.detail;
+
+            $.ajax("{% static 'bundeslaender_simplify200.geojson' %}").done(function(data) {
+                L.geoJson(JSON.parse(data), {
+                    style: function (feature) {
+                        return {color: feature.properties.color};
+                    }
+                }).addTo(detail.map);
+            });
+
             {% for marker in measuring_points %}
                 {% if marker.position.latitude %}
                     L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
-                        .addTo(detail.map).bindPopup(
-                            "<p>{{ marker.name }}</p>"
-                            + "<p>{{ marker.location }}</p>{% if marker.image %}"
-                            + "<img src=\"{% static marker.image %}\"> {% endif %}"
-                            + "<p>{{ marker.amsl }}</p>"
-                            + "<p>{{ marker.get_eu_typing_display }}</p>"
-                            + "<p>{{ marker.get_category_display }}</p>"
-                    );
+                        .addTo(detail.map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
                 {% endif %}
             {% endfor %}
         }, false);
+
     </script>
     {% leaflet_js %}
 {% endblock js %}
