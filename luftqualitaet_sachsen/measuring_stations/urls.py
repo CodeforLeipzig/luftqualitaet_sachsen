@@ -6,4 +6,6 @@ from measuring_stations import views
 
 urlpatterns = [
     url(r'^$', views.overview, name='measuring_stations_measuringpoint_overview'),
+    url(r'^station/(?P<slug>[-\w]+)/$', views.MeasuringPointDetailView.as_view(),
+        name='measuring_stations_measuringpoint_detail'),
 ]

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load l10n %}
+{% load leaflet_tags %}
+
+{% block css %}
+    {{ block.super }}
+    {% if measuringpoint.position.latitude %}
+        {% leaflet_css %}
+    {% endif %}
+{% endblock css %}
+
+{% block js %}
+    {{ block.super }}
+    {% if measuringpoint.position.latitude %}
+        {% leaflet_js %}
+        <script>
+            window.addEventListener("map:init", function (e) {
+                {% localize off %}
+                var lat = {{ measuringpoint.position.latitude }};
+                var lng = {{ measuringpoint.position.longitude }};
+                {% endlocalize %}
+                var center = new L.LatLng(lat, lng);
+                var detail = e.detail;
+                detail.map.setView(center, 16);
+                L.marker([lat, lng]).addTo(detail.map);
+            }, false);
+        </script>
+        {% leaflet_map "measuringpointmap" callback="window.map_init_basic" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content %}
+    <h1>{{ measuringpoint.name }}<br>
+        <small>{{ measuringpoint.get_category_display }}</small></h1>
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Informationen zur Messstelle</div>
+                <div class="panel-body">
+                    {% if measuringpoint.image %}
+                        <img src="{{ MEDIA_URL }}{{ measuringpoint.image }}" width="{{ measuringpoint.image.width }}" height="{{ measuringpoint.image.height }}" alt="Foto der Messstelle">
+                    {% endif %}
+                    <p>Standort: {{ measuringpoint.location }}</p>
+                    <p>Höhe über NN: {{ measuringpoint.amsl }} m</p>
+                    <p>Typisierung nach EU- Richtlinie: {{ measuringpoint.get_eu_typing_display }}</p>
+                    {% if measuringpoint.position.latitude %}
+                        {% leaflet_map "measuringpointmap" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

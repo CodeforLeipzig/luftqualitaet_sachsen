@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 
 {% filter escapejs %}
-    <p>{{ marker.name }}</p>
+    <p><a href="{{ marker.get_absolute_url }}">{{ marker.name }}</a></p>
     <p>{{ marker.location }}</p>{% if marker.image %}
     <img src="{% static marker.image %}"> {% endif %}
     <p>{{ marker.amsl }}</p>
