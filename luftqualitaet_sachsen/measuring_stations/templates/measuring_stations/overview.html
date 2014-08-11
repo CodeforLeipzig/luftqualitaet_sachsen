@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
-{% load leaflet_tags %}
-{% load static from staticfiles %}
+{% load leaflet_tags static l10n %}
 
 {% block css %}
     {{ block.super }}
@@ -32,8 +31,10 @@
 
             {% for marker in measuring_points %}
                 {% if marker.position.latitude %}
-                    L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
-                        .addTo(detail.map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
+                    {% localize off %}
+                        L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
+                            .addTo(detail.map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
+                    {% endlocalize %}
                 {% endif %}
             {% endfor %}
         }, false);
@@ -52,5 +53,11 @@
             et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
             Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         {% leaflet_map "start_map" %}
+        <div class="container">
+            {% for marker in measuring_points %}
+                {% if marker.image %}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

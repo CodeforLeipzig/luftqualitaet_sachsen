@@ -7,6 +7,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from geoposition.fields import GeopositionField
 from uuidfield import UUIDField
+from easy_thumbnails.fields import ThumbnailerImageField
 
 
 @python_2_unicode_compatible
@@ -42,7 +43,7 @@ class MeasuringPoint(models.Model):
     eu_typing = models.IntegerField('Typisierung nach EU- Richtlinie', choices=EU_TYPING_CHOICES,
         default=EU_TYPING_CITY_BACKGROUND)
     category = models.IntegerField('Kategorie', choices=CATEGORIES, default=CATEGORY_CITY)
-    image = models.ImageField('Bild', upload_to='measuring_stations', blank=True)
+    image = ThumbnailerImageField('Bild', upload_to='measuring_stations', blank=True)
     position = GeopositionField()
 
     class Meta:

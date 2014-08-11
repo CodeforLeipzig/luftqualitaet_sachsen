@@ -1,10 +1,12 @@
-{% load static from staticfiles %}
+{% load thumbnail %}
 
 {% filter escapejs %}
-    <p><a href="{{ marker.get_absolute_url }}">{{ marker.name }}</a></p>
-    <p>{{ marker.location }}</p>{% if marker.image %}
-    <img src="{% static marker.image %}"> {% endif %}
-    <p>{{ marker.amsl }}</p>
-    <p>{{ marker.get_eu_typing_display }}</p>
-    <p>{{ marker.get_category_display }}</p>
+    {% if marker.image %}
+        <img src="{{ marker.image|thumbnail_url:'overview' }}" alt="lol">
+    {% endif %}
+    <p>Name: {{ marker.name }}</p>
+    <p>Standort: {{ marker.location }}</p>
+    <p>Höhe über NN: {{ marker.amsl }}</p>
+    <p>EU Typisierung nach EU- Richtline: {{ marker.get_eu_typing_display }}</p>
+    <p>Typ: {{ marker.get_category_display }}</p>
 {% endfilter %}

@@ -162,6 +162,7 @@ class Common(Configuration):
         'django.contrib.admindocs',
         'crispy_forms',
         'measuring_stations',
+        'easy_thumbnails',
         'geoposition',
         'leaflet',
     )
@@ -185,6 +186,20 @@ class Common(Configuration):
         'MIN_ZOOM': 3,
         'MAX_ZOOM': 18,
         'RESET_VIEW': False,
+    }
+
+    SOUTH_MIGRATION_MODULES = {
+        'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    }
+    """
+    THUMBNAIL_PROCESSORS = (
+        'easy_thumbnails.processors.autocrop',
+    )
+    """
+    THUMBNAIL_ALIASES = {
+        '': {
+            'overview': {'size': (180, 90), 'crop': False},
+        },
     }
 
 
