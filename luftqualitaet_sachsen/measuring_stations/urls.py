@@ -5,5 +5,5 @@ from measuring_stations import views
 
 
 urlpatterns = [
-    url(r'^$', views.overview, name='measuring_stations_measuringpoint_home'),
+    url(r'^$', views.overview, name='measuring_stations_measuringpoint_overview'),
 ]
