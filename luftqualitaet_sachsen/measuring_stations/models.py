@@ -40,7 +40,7 @@ class MeasuringPoint(models.Model):
     slug = models.SlugField(unique=True)
     location = models.CharField('Standort', max_length=100)
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
-    eu_typing = models.IntegerField('Typisierung nach EU- Richtlinie', choices=EU_TYPING_CHOICES,
+    eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
         default=EU_TYPING_CITY_BACKGROUND)
     category = models.IntegerField('Kategorie', choices=CATEGORIES, default=CATEGORY_CITY)
     image = ThumbnailerImageField('Bild', upload_to='measuring_stations', blank=True)
