@@ -1,5 +1,7 @@
 .cache
 .coverage
+bower_components
 docs/_build
 htmlcov
 media
+static_root
