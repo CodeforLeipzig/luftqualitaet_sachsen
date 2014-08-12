@@ -192,6 +192,7 @@ class Common(Configuration):
     THUMBNAIL_ALIASES = {
         '': {
             'overview': {'size': (180, 90), 'crop': False},
+            'detail': {'size': (328, 328)},
         },
     }
 

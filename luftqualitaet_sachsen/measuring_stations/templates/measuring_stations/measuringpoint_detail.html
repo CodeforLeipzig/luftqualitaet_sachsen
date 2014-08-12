@@ -2,6 +2,8 @@
 
 {% load l10n %}
 {% load leaflet_tags %}
+{% load static from staticfiles %}
+{% load thumbnail %}
 
 {% block css %}
     {{ block.super }}
@@ -12,6 +14,13 @@
 
 {% block js %}
     {{ block.super }}
+    <script src="{% static "ekko-lightbox.min.js" %}"></script>
+    <script>
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
     {% if measuringpoint.position.latitude %}
         {% leaflet_js %}
         <script>
@@ -41,11 +50,13 @@
                 <div class="panel-heading">Informationen zur Messstelle</div>
                 <div class="panel-body">
                     {% if measuringpoint.image %}
-                        <img src="{{ MEDIA_URL }}{{ measuringpoint.image }}" width="{{ measuringpoint.image.width }}" height="{{ measuringpoint.image.height }}" alt="Foto der Messstelle">
+                        <a href="{{ MEDIA_URL }}{{ measuringpoint.image }}" data-toggle="lightbox" data-title="Messstelle {{ measuringpoint.name }}" class="thumbnail">
+                            <img src="{{ measuringpoint.image|thumbnail_url:'detail' }}" alt="Foto der Messstelle" class="img-responsive">
+                        </a>
                     {% endif %}
                     <p>Standort: {{ measuringpoint.location }}</p>
                     <p>Höhe über NN: {{ measuringpoint.amsl }} m</p>
-                    <p>Typisierung nach EU- Richtlinie: {{ measuringpoint.get_eu_typing_display }}</p>
+                    <p>Typisierung nach EU-Richtlinie: {{ measuringpoint.get_eu_typing_display }}</p>
                     {% if measuringpoint.position.latitude %}
                         {% leaflet_map "measuringpointmap" %}
                     {% endif %}
