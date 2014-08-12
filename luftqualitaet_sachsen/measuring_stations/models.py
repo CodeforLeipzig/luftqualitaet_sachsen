@@ -38,7 +38,9 @@ class MeasuringPoint(models.Model):
     )
     name = models.CharField('Name', max_length=100, unique=True)
     slug = models.SlugField(unique=True)
-    location = models.CharField('Standort', max_length=100)
+    location = models.CharField('Standort', max_length=100,
+        help_text='Staße bzw. ungefähren Standort angeben')
+    city = models.CharField('Stadt', max_length=100, help_text='Stadt oder Ortschaft angeben')
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
     eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
         default=EU_TYPING_CITY_BACKGROUND)

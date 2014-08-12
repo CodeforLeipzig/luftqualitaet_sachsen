@@ -54,7 +54,7 @@
                             <img src="{{ measuringpoint.image|thumbnail_url:'detail' }}" alt="Foto der Messstelle" class="img-responsive">
                         </a>
                     {% endif %}
-                    <p>Standort: {{ measuringpoint.location }}</p>
+                    <p>Standort: {{ measuringpoint.location }}, {{ measuringpoint.city }}</p>
                     <p>Höhe über NN: {{ measuringpoint.amsl }} m</p>
                     <p>Typisierung nach EU-Richtlinie: {{ measuringpoint.get_eu_typing_display }}</p>
                     {% if measuringpoint.position.latitude %}
