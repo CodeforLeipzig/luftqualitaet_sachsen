@@ -31,7 +31,7 @@
                 {% endlocalize %}
                 var center = new L.LatLng(lat, lng);
                 var detail = e.detail;
-                detail.map.setView(center, 16);
+                detail.map.setView(center, 14);
                 L.marker([lat, lng]).addTo(detail.map);
             }, false);
         </script>
@@ -54,9 +54,20 @@
                             <img src="{{ measuringpoint.image|thumbnail_url:'detail' }}" alt="Foto der Messstelle" class="img-responsive">
                         </a>
                     {% endif %}
-                    <p>Standort: {{ measuringpoint.location }}, {{ measuringpoint.city }}</p>
-                    <p>Höhe über NN: {{ measuringpoint.amsl }} m</p>
-                    <p>Typisierung nach EU-Richtlinie: {{ measuringpoint.get_eu_typing_display }}</p>
+                    <table class="table table-condensed">
+                        <tr>
+                            <td>Standort:</td>
+                            <td>{{ measuringpoint.location }}, {{ measuringpoint.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>Höhe über NN:</td>
+                            <td>{{ measuringpoint.amsl }} m</td>
+                        </tr>
+                        <tr>
+                            <td>Typisierung nach EU-Richtlinie:</td>
+                            <td>{{ measuringpoint.get_eu_typing_display }}</td>
+                        </tr>
+                    </table>
                     {% if measuringpoint.position.latitude %}
                         {% leaflet_map "measuringpointmap" %}
                     {% endif %}
