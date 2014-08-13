@@ -167,13 +167,13 @@
 {
     "fields": {
         "category": 1,
-        "city": "Fichtelberg",
+        "city": "Oberwiesenthal",
         "amsl": 1214,
         "name": "Fichtelberg",
         "image": "",
         "slug": "fichtelberg",
         "location": "Gipfelplateau",
-        "position": "50.42836743184986,12.954648550804222",
+        "position": "50.42831617139393,12.953554209526146",
         "eu_typing": 7
     },
     "model": "measuring_stations.measuringpoint",
@@ -302,7 +302,7 @@
 {
     "fields": {
         "category": 1,
-        "city": "Sproitz",
+        "city": "Quitzdorf am See",
         "amsl": 148,
         "name": "Niesky",
         "image": "",
@@ -377,7 +377,7 @@
 {
     "fields": {
         "category": 1,
-        "city": "Steinh\u00fcbel",
+        "city": "Neuhausen",
         "amsl": 785,
         "name": "Schwartenberg",
         "image": "",
