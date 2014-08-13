@@ -1,12 +1,19 @@
 {% load thumbnail %}
 
 {% filter escapejs %}
-    {% if marker.image %}
-        <img src="{{ marker.image|thumbnail_url:'overview' }}" alt="lol">
-    {% endif %}
-    <p>Name: {{ marker.name }}</p>
-    <p>Standort: {{ marker.location }}</p>
-    <p>Höhe über NN: {{ marker.amsl }}</p>
-    <p>EU Typisierung nach EU- Richtline: {{ marker.get_eu_typing_display }}</p>
-    <p>Typ: {{ marker.get_category_display }}</p>
+    <div class="row">
+        {% if marker.image %}
+            <div class="col-md-6">
+                <img src="{{ marker.image|thumbnail_url:'overview' }}" alt="Foto der Messstelle" class="thumbnail">
+            </div>
+        <div class="col-md-6">
+        {% else %}
+        <div class="col-md-12">
+        {% endif %}
+            <a href="{% url "measuring_stations_measuringpoint_detail" marker.slug %}">Messstelle {{ marker.name }}</a><br>
+            {{ marker.location }}, {{ marker.city }}<br>
+            {{ marker.amsl }} m über NN<br>
+            {{ marker.get_category_display }}
+        </div>
+    </div>
 {% endfilter %}
