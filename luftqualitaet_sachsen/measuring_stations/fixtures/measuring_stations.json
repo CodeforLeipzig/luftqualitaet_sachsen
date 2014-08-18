@@ -2,9 +2,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Annaberg-Buchholz",
         "amsl": 545,
         "name": "Annaberg-Buchholz",
         "image": "",
+        "slug": "annaberg-buchholz",
         "location": "Talstr./Str. der Einheit",
         "position": "50.57054638792572,12.997174064001456",
         "eu_typing": 1
@@ -15,9 +17,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Bautzen",
         "amsl": 203,
         "name": "Bautzen",
         "image": "",
+        "slug": "bautzen",
         "location": "Stieberstr./Goethestr.",
         "position": "51.17551570000001,14.44209269999999",
         "eu_typing": 1
@@ -28,9 +32,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Borna",
         "amsl": 145,
         "name": "Borna",
         "image": "",
+        "slug": "borna",
         "location": "Sachsenallee 45",
         "position": "51.12541906598371,12.494145643585966",
         "eu_typing": 2
@@ -41,9 +47,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Brockau",
         "amsl": 430,
         "name": "Brockau",
         "image": "",
+        "slug": "brockau",
         "location": "Elsterberger Str. 4",
         "position": "50.60814362028454,12.21079014715201",
         "eu_typing": 6
@@ -54,9 +62,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Carlsfeld",
         "amsl": 896,
         "name": "Carlsfeld",
         "image": "",
+        "slug": "carlsfeld",
         "location": "Weitersglashu\u0308tte 2a",
         "position": "50.4275710878385,12.61538710859827",
         "eu_typing": 7
@@ -67,9 +77,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Chemnitz",
         "amsl": 300,
         "name": "Chemnitz-Mitte",
         "image": "",
+        "slug": "chemnitz-mitte",
         "location": "Lohstra\u00dfe",
         "position": "50.832456342616,12.91733612520079",
         "eu_typing": 1
@@ -80,9 +92,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Chemnitz",
         "amsl": null,
         "name": "Chemnitz-Leipziger Str.",
         "image": "",
+        "slug": "chemnitz-leipziger-str",
         "location": "Leipziger Str. 109",
         "position": "50.84563379999999,12.903334399999949",
         "eu_typing": 2
@@ -93,9 +107,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Collm",
         "amsl": 313,
         "name": "Collmberg",
         "image": "",
+        "slug": "collmberg",
         "location": "Gipfelplateau",
         "position": "51.30380038301377,13.009387912750299",
         "eu_typing": 6
@@ -106,9 +122,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Dresden",
         "amsl": 112,
         "name": "Dresden-Nord",
         "image": "",
+        "slug": "dresden-nord",
         "location": "Schlesischer Platz",
         "position": "51.06494687274071,13.741394482070177",
         "eu_typing": 2
@@ -119,9 +137,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Dresden",
         "amsl": 116,
         "name": "Dresden-Wickelmannstr",
         "image": "",
+        "slug": "dresden-wickelmannstr",
         "location": "Wickelmannstr./Schnorrstr.",
         "position": "51.03606546661098,13.730249341698936",
         "eu_typing": 1
@@ -132,9 +152,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Dresden",
         "amsl": 150,
-        "name": "Dresden- Bergstr.",
+        "name": "Dresden-Bergstr.",
         "image": "",
+        "slug": "dresden-bergstr",
         "location": "Bergstr. 78-80",
         "position": "51.026299030200136,13.731575963806335",
         "eu_typing": 2
@@ -145,11 +167,13 @@
 {
     "fields": {
         "category": 1,
+        "city": "Oberwiesenthal",
         "amsl": 1214,
         "name": "Fichtelberg",
         "image": "",
+        "slug": "fichtelberg",
         "location": "Gipfelplateau",
-        "position": "50.42836743184986,12.954648550804222",
+        "position": "50.42831617139393,12.953554209526146",
         "eu_typing": 7
     },
     "model": "measuring_stations.measuringpoint",
@@ -158,9 +182,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Freiberg",
         "amsl": 393,
         "name": "Freiberg",
         "image": "",
+        "slug": "freiberg",
         "location": "Helmertplatz",
         "position": "50.91629899697673,13.346792746032747",
         "eu_typing": 1
@@ -171,9 +197,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Glauchau",
         "amsl": 233,
         "name": "Glauchau",
         "image": "",
+        "slug": "glauchau",
         "location": "Gu\u0308terbahnhofstr. 25",
         "position": "50.82601628037594,12.542019398811362",
         "eu_typing": 1
@@ -184,9 +212,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "G\u00f6rlitz",
         "amsl": 210,
         "name": "Go\u0308rlitz",
         "image": "",
+        "slug": "gorlitz",
         "location": "Zeppelinstr. 10",
         "position": "51.15579270826004,14.973981109123201",
         "eu_typing": 2
@@ -197,9 +227,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Klingenthal",
         "amsl": 540,
         "name": "Klingenthal",
         "image": "",
+        "slug": "klingenthal",
         "location": "Graslitzer Stra\u00dfe",
         "position": "50.354734491288745,12.468934914224974",
         "eu_typing": 1
@@ -210,9 +242,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Leipzig",
         "amsl": 110,
         "name": "Leipzig-Lu\u0308tzner Str.",
         "image": "",
+        "slug": "leipzig-lutzner-str",
         "location": "Lu\u0308tzner Str. 36",
         "position": "51.3359500950666,12.334441225864339",
         "eu_typing": 2
@@ -223,9 +257,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Leipzig",
         "amsl": 110,
         "name": "Leipzig-Mitte",
         "image": "",
+        "slug": "leipzig-mitte",
         "location": "Willy-Brandt-Platz/Am Hallischen Tor",
         "position": "51.34416689213637,12.377150085913854",
         "eu_typing": 2
@@ -236,9 +272,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Leipzig",
         "amsl": 115,
         "name": "Leipzig-West",
         "image": "",
+        "slug": "leipzig-west",
         "location": "Nikolai-Rumjanzew-Str. 100",
         "position": "51.3155967,12.302339800000027",
         "eu_typing": 1
@@ -249,9 +287,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Leipzig",
         "amsl": 110,
         "name": "Leipzig-Thekla",
         "image": "",
+        "slug": "leipzig-thekla",
         "location": "Kiebitzstr.",
         "position": "51.377485,12.426725199999964",
         "eu_typing": 3
@@ -262,9 +302,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Quitzdorf am See",
         "amsl": 148,
         "name": "Niesky",
         "image": "",
+        "slug": "niesky",
         "location": "Sproitz, An der Aue",
         "position": "51.2879136,14.748826300000019",
         "eu_typing": 5
@@ -275,9 +317,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Plauen",
         "amsl": 385,
         "name": "Plauen DWD",
         "image": "",
+        "slug": "plauen-dwd",
         "location": "Nach den Drei Bergen 2a",
         "position": "50.48166709256876,12.130440845403655",
         "eu_typing": 3
@@ -288,9 +332,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Plauen",
         "amsl": 343,
         "name": "Plauen Su\u0308d",
         "image": "",
+        "slug": "plauen-sud",
         "location": "Hofer Landstr./Oelsnitzer Str.",
         "position": "50.48613544219208,12.138032524085588",
         "eu_typing": 2
@@ -301,9 +347,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Radebeul",
         "amsl": 246,
         "name": "Radebeul-Wahnsdorf",
         "image": "",
+        "slug": "radebeul-wahnsdorf",
         "location": "Altwahnsdorf 12",
         "position": "51.11738407793989,13.675463847885112",
         "eu_typing": 4
@@ -314,9 +362,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Schkeuditz",
         "amsl": 122,
         "name": "Schkeuditz",
         "image": "",
+        "slug": "schkeuditz",
         "location": "Leipziger Str. 59",
         "position": "51.39362999999999,12.233600000000024",
         "eu_typing": 4
@@ -327,9 +377,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Neuhausen",
         "amsl": 785,
         "name": "Schwartenberg",
         "image": "",
+        "slug": "schwartenberg",
         "location": "Gipfel",
         "position": "50.65913439355386,13.464980074799314",
         "eu_typing": 7
@@ -340,9 +392,11 @@
 {
     "fields": {
         "category": 1,
+        "city": "Zinnwald",
         "amsl": 877,
         "name": "Zinnwald",
         "image": "",
+        "slug": "zinnwald",
         "location": "Hochmoorweg 7",
         "position": "50.73148,13.75183000000004",
         "eu_typing": 7
@@ -353,9 +407,11 @@
 {
     "fields": {
         "category": 2,
+        "city": "Zittau",
         "amsl": 230,
         "name": "Zittau-Ost",
         "image": "",
+        "slug": "zittau-ost",
         "location": "Bru\u0308ckenstr. 12",
         "position": "50.892256425641726,14.82255206878665",
         "eu_typing": 3
@@ -366,9 +422,11 @@
 {
     "fields": {
         "category": 3,
+        "city": "Zwickau",
         "amsl": 267,
         "name": "Zwickau Werdauer Str.",
         "image": "",
+        "slug": "zwickau-werdauer-str",
         "location": "Werdauer Str./Crimmitschauer Str.",
         "position": "50.720009991056166,12.488608430810586",
         "eu_typing": 2

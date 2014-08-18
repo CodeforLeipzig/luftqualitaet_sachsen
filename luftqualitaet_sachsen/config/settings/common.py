@@ -120,6 +120,7 @@ class Common(Configuration):
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
         os.path.join(BaseDir.BASE_DIR, 'static'),
+        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'ekko-lightbox', 'dist'),
     )
 
     STATICFILES_FINDERS = (
@@ -188,15 +189,14 @@ class Common(Configuration):
         'RESET_VIEW': False,
     }
 
-    SOUTH_MIGRATION_MODULES = {
-        'easy_thumbnails': 'easy_thumbnails.south_migrations',
-    }
-
     THUMBNAIL_ALIASES = {
         '': {
             'overview': {'size': (180, 90), 'crop': False},
+            'detail': {'size': (328, 328)},
         },
     }
+
+    THUMBNAIL_SUBDIR = 'thumbs'
 
 
 class Public(Email, Common):
