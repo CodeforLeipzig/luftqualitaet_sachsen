@@ -62,26 +62,28 @@ class MeasuringPoint(models.Model):
 
 @python_2_unicode_compatible
 class IndicatedValue(models.Model):
-    SO2 = 1
-    NOX = 2
-    O3 = 3
-    BTX = 4
-    PM10_TEOM = 5
-    PM10 = 6
-    PM25 = 7
-    EC = 8
-    OC = 9
-    STI = 10
-    STNS = 11
-    MET = 12
+    SO2 = 'SO2'
+    NO = 'NO'
+    NO2 = 'NO2'
+    O3 = 'O3'
+    BEN = 'BEN'
+    PM10_TEOM = 'PM10TEOM'
+    PM10 = 'PM10'
+    PM25 = 'PM2.5'
+    EC = 'EC'
+    OC = 'OC'
+    STI = 'STI'
+    STNS = 'STNS'
+    MET = 'MET'
     UNITS = (
         (SO2, 'SO2'),
-        (NOX, 'NOX'),
+        (NO, 'NO'),
+        (NO2, 'NO2'),
         (O3, 'O3'),
-        (BTX, 'BTX'),
+        (BEN, 'BEN'),
         (PM10_TEOM, 'PM10 TEOM'),
         (PM10, 'PM10'),
-        (PM25, 'PM2,5'),
+        (PM25, 'PM2.5'),
         (EC, 'EC'),
         (OC, 'OC'),
         (STI, 'ST-I'),
@@ -90,7 +92,7 @@ class IndicatedValue(models.Model):
     )
     uuid = UUIDField(auto=True, primary_key=True)
     value = models.FloatField('Wert')
-    unit = models.IntegerField('Einheit', choices=UNITS, default=SO2)
+    unit = models.CharField('Einheit', choices=UNITS, default=SO2, max_length=10)
     date_created = models.DateTimeField('Erstellt am')
     measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values',
         verbose_name='Messstelle')
@@ -104,6 +106,6 @@ class IndicatedValue(models.Model):
         return '%s %s' % (self.value, self.unit)
 
     def save(self, *args, **kwargs):
-        if not self.uuid:
-            self.date_created = now()
+        #if not self.uuid:
+            #self.date_created = now()
         super(IndicatedValue, self).save(*args, **kwargs)

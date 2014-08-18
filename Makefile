@@ -1,6 +1,7 @@
 PROJECT = luftqualitaet_sachsen
 PORT ?= 8000
 ENV ?= dev
+PERIOD ?= 24H
 
 WHERE = $(shell uname -a)
 ifeq ($(CI),true)
@@ -11,7 +12,7 @@ endif
 
 .PHONY: help install install-dev install-test install-osx create-db \
 			info isort isort-check test coverage coverage-html migrate \
-			runserver shell docs clean clean-coverage clean-pyc
+			runserver shell docs clean clean-coverage clean-pyc fetch
 
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
@@ -32,6 +33,7 @@ help:
 	@echo "  clean              to remove all artifacts"
 	@echo "  clean-coverage     to remove coverage artifacts"
 	@echo "  clean-pyc          to remove Python file artifacts"
+	@echo "  fetch              to fetch live data"
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
@@ -94,3 +96,6 @@ clean-pyc:
 
 clean-release:
 	rm -fr release
+
+fetch:
+	envdir envs/$(ENV) $(PROJECT)/manage.py fetch $(PERIOD)
