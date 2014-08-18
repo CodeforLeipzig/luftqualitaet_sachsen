@@ -163,7 +163,7 @@ class Command(BaseCommand):
                 for row in reader:
                     dateRow = row['Datum Zeit']
                     if len(dateRow) > 0:
-                        date = datetime.datetime.strptime(dateRow, "%d-%m-%y %H:%M")
+                        date = try_parsing_date(dateRow)
                         value = row[' ' + stationName + ' ' + unit].strip()
                     
                         if value.find(',') > -1:
@@ -178,3 +178,11 @@ class Command(BaseCommand):
                 
     def invert_dict(self, d):
         return dict([(v, k) for k, v in d.iteritems()])
+    
+    def try_parsing_date(text):
+        for fmt in ('%d-%m-%y %H:%M', '%d-%m-%y'):
+            try:
+                return datetime.datetime.strptime(text, fmt)
+            except ValueError:
+                pass
+        raise ValueError('no valid date format found')
