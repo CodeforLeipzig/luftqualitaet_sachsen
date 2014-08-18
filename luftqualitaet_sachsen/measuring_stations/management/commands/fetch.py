@@ -8,6 +8,7 @@ import gevent.monkey
 import requests
 import csv
 import ast
+import datetime
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
 from gevent.pool import Pool
