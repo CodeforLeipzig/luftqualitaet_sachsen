@@ -166,14 +166,14 @@ class Command(BaseCommand):
                         date = datetime.datetime.strptime(dateRow, "%d-%m-%y %H:%M")
                         value = row[' ' + stationName + ' ' + unit].strip()
                     
-                    if value.find(',') > -1:
-                        value = float(value.replace(",","."))
+                        if value.find(',') > -1:
+                            value = float(value.replace(",","."))
 
-                    if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
-                        IndicatedValue.objects.create(unit=unit,
-                                                    date_created=date,
-                                                    measuring_point=station,
-                                                    value=value+0.0)
+                        if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
+                            IndicatedValue.objects.create(unit=unit,
+                                                        date_created=date,
+                                                        measuring_point=station,
+                                                        value=value+0.0)
                 f.close
                 
     def invert_dict(self, d):
