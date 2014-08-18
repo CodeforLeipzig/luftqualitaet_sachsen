@@ -179,7 +179,7 @@ class Command(BaseCommand):
     def invert_dict(self, d):
         return dict([(v, k) for k, v in d.iteritems()])
     
-    def try_parsing_date(text):
+    def try_parsing_date(self, text):
         for fmt in ('%d-%m-%y %H:%M', '%d-%m-%y'):
             try:
                 return datetime.datetime.strptime(text, fmt)
