@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from geoposition.fields import GeopositionField
 from uuidfield import UUIDField
+from easy_thumbnails.fields import ThumbnailerImageField
 
 
 @python_2_unicode_compatible
@@ -35,12 +37,15 @@ class MeasuringPoint(models.Model):
         (CATEGORY_TRAFFIC, 'Stationen zur Beurteilung verkehrsnaher Belastungen'),
     )
     name = models.CharField('Name', max_length=100, unique=True)
-    location = models.CharField('Standort', max_length=100)
+    slug = models.SlugField(unique=True)
+    location = models.CharField('Standort', max_length=100,
+        help_text='Staße bzw. ungefähren Standort angeben')
+    city = models.CharField('Stadt', max_length=100, help_text='Stadt oder Ortschaft angeben')
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
-    eu_typing = models.IntegerField('Typisierung nach EU- Richtlinie', choices=EU_TYPING_CHOICES,
+    eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
         default=EU_TYPING_CITY_BACKGROUND)
     category = models.IntegerField('Kategorie', choices=CATEGORIES, default=CATEGORY_CITY)
-    image = models.ImageField('Bild', upload_to='measuring_stations', blank=True)
+    image = ThumbnailerImageField('Bild', upload_to='measuring_stations', blank=True)
     position = GeopositionField()
 
     class Meta:
@@ -50,6 +55,9 @@ class MeasuringPoint(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('measuring_stations_measuringpoint_detail', kwargs={'slug': self.slug})
 
 
 @python_2_unicode_compatible

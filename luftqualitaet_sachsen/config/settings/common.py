@@ -120,6 +120,7 @@ class Common(Configuration):
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
         os.path.join(BaseDir.BASE_DIR, 'static'),
+        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'ekko-lightbox', 'dist'),
     )
 
     STATICFILES_FINDERS = (
@@ -162,7 +163,9 @@ class Common(Configuration):
         'django.contrib.admindocs',
         'crispy_forms',
         'measuring_stations',
+        'easy_thumbnails',
         'geoposition',
+        'leaflet',
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -177,6 +180,23 @@ class Common(Configuration):
     EMAIL_SUBJECT_PREFIX = '[Luftqualität Sachsen]'
     DEFAULT_FROM_EMAIL = 'noreply@example.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+    LEAFLET_CONFIG = {
+        'DEFAULT_CENTER': (50.9280361, 13.456666),
+        'DEFAULT_ZOOM': 8,
+        'MIN_ZOOM': 3,
+        'MAX_ZOOM': 18,
+        'RESET_VIEW': False,
+    }
+
+    THUMBNAIL_ALIASES = {
+        '': {
+            'overview': {'size': (180, 90), 'crop': False},
+            'detail': {'size': (328, 328)},
+        },
+    }
+
+    THUMBNAIL_SUBDIR = 'thumbs'
 
 
 class Public(Email, Common):

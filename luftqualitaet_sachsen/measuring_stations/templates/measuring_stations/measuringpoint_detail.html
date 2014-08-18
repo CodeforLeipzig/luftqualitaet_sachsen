@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% load l10n %}
+{% load leaflet_tags %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block css %}
+    {{ block.super }}
+    {% if measuringpoint.position.latitude %}
+        {% leaflet_css %}
+    {% endif %}
+{% endblock css %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static "ekko-lightbox.min.js" %}"></script>
+    <script>
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
+    {% if measuringpoint.position.latitude %}
+        {% leaflet_js %}
+        <script>
+            window.addEventListener("map:init", function (e) {
+                {% localize off %}
+                var lat = {{ measuringpoint.position.latitude }};
+                var lng = {{ measuringpoint.position.longitude }};
+                {% endlocalize %}
+                var center = new L.LatLng(lat, lng);
+                var detail = e.detail;
+                detail.map.setView(center, 14);
+                L.marker([lat, lng]).addTo(detail.map);
+            }, false);
+        </script>
+        {% leaflet_map "measuringpointmap" callback="window.map_init_basic" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content %}
+    <h1>{{ measuringpoint.name }}<br>
+        <small>{{ measuringpoint.get_category_display }}</small></h1>
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Informationen zur Messstelle</div>
+                <div class="panel-body">
+                    {% if measuringpoint.image %}
+                        <a href="{{ MEDIA_URL }}{{ measuringpoint.image }}" data-toggle="lightbox" data-title="Messstelle {{ measuringpoint.name }}" class="thumbnail">
+                            <img src="{{ measuringpoint.image|thumbnail_url:'detail' }}" alt="Foto der Messstelle" class="img-responsive">
+                        </a>
+                    {% endif %}
+                    <table class="table table-condensed">
+                        <tr>
+                            <td>Standort:</td>
+                            <td>{{ measuringpoint.location }}, {{ measuringpoint.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>Höhe über NN:</td>
+                            <td>{{ measuringpoint.amsl }} m</td>
+                        </tr>
+                        <tr>
+                            <td>Typisierung nach EU-Richtlinie:</td>
+                            <td>{{ measuringpoint.get_eu_typing_display }}</td>
+                        </tr>
+                    </table>
+                    {% if measuringpoint.position.latitude %}
+                        {% leaflet_map "measuringpointmap" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
