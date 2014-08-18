@@ -163,7 +163,7 @@ class Command(BaseCommand):
                 for row in reader:
                     dateRow = row['Datum Zeit']
                     if len(dateRow) > 0:
-                        date = try_parsing_date(dateRow)
+                        date = self.try_parsing_date(dateRow)
                         value = row[' ' + stationName + ' ' + unit].strip()
                     
                         if value.find(',') > -1:
