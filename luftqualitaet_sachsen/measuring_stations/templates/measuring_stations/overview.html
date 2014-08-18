@@ -18,26 +18,24 @@
     <script type="text/javascript">
         var marker = [];
 
-        window.addEventListener("map:init", function (e) {
-            var detail = e.detail;
-
+        window.map_init_basic = function (map, options) {
             $.ajax("{% static 'bundeslaender_simplify200.geojson' %}").done(function(data) {
                 L.geoJson(JSON.parse(data), {
                     style: function (feature) {
                         return {color: feature.properties.color};
                     }
-                }).addTo(detail.map);
+                }).addTo(map);
             });
 
             {% for marker in measuring_points %}
                 {% if marker.position.latitude %}
                     {% localize off %}
                         L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
-                            .addTo(detail.map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
+                            .addTo(map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
                     {% endlocalize %}
                 {% endif %}
             {% endfor %}
-        }, false);
+        }
 
     </script>
     {% leaflet_js %}
@@ -52,7 +50,7 @@
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
             et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
             Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        {% leaflet_map "start_map" %}
+        {% leaflet_map "start_map" callback="window.map_init_basic" %}
         <div class="container">
             {% for marker in measuring_points %}
                 {% if marker.image %}
