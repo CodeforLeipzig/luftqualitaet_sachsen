@@ -37,6 +37,7 @@ help:
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
+	bower install
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
