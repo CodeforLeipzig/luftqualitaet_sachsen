@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.timezone import now
 from geoposition.fields import GeopositionField
 from uuidfield import UUIDField
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -38,8 +37,7 @@ class MeasuringPoint(models.Model):
     )
     name = models.CharField('Name', max_length=100, unique=True)
     slug = models.SlugField(unique=True)
-    location = models.CharField('Standort', max_length=100,
-        help_text='Staße bzw. ungefähren Standort angeben')
+    location = models.CharField('Standort', max_length=100, help_text='Staße bzw. ungefähren Standort angeben')
     city = models.CharField('Stadt', max_length=100, help_text='Stadt oder Ortschaft angeben')
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
     eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
@@ -62,40 +60,24 @@ class MeasuringPoint(models.Model):
 
 @python_2_unicode_compatible
 class IndicatedValue(models.Model):
-    SO2 = 'SO2'
-    NO = 'NO'
-    NO2 = 'NO2'
-    O3 = 'O3'
-    BEN = 'BEN'
-    PM10_TEOM = 'PM10TEOM'
-    PM10 = 'PM10'
-    PM25 = 'PM2.5'
-    EC = 'EC'
-    OC = 'OC'
-    STI = 'STI'
-    STNS = 'STNS'
-    MET = 'MET'
-    UNITS = (
-        (SO2, 'SO2'),
-        (NO, 'NO'),
-        (NO2, 'NO2'),
-        (O3, 'O3'),
-        (BEN, 'BEN'),
-        (PM10_TEOM, 'PM10 TEOM'),
-        (PM10, 'PM10'),
-        (PM25, 'PM2.5'),
-        (EC, 'EC'),
-        (OC, 'OC'),
-        (STI, 'ST-I'),
-        (STNS, 'ST-NS'),
-        (MET, 'Met.'),
-    )
     uuid = UUIDField(auto=True, primary_key=True)
-    value = models.FloatField('Wert')
-    unit = models.CharField('Einheit', choices=UNITS, default=SO2, max_length=10)
     date_created = models.DateTimeField('Erstellt am')
-    measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values',
-        verbose_name='Messstelle')
+    measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values', verbose_name='Messstelle')
+    so2 = models.FloatField('SO2', default=0)
+    no = models.FloatField('NO', default=0)
+    no2 = models.FloatField('NO2', default=0)
+    o3 = models.FloatField('O3', default=0)
+    ben = models.FloatField('BEN', default=0)
+    pm10_teom = models.FloatField('PM10TEOM', default=0)
+    pm10 = models.FloatField('PM10', default=0)
+    pm25 = models.FloatField('PM2.5', default=0)
+    ec = models.FloatField('EC', default=0)
+    oc = models.FloatField('OC', default=0)
+    sti = models.FloatField('STI', default=0)
+    stns = models.FloatField('STNS', default=0)
+    met = models.FloatField('MET', default=0)
+    co = models.FloatField('CO', default=0)
+    pm10_pb = models.FloatField('PM10 Pb', default=0)
 
     class Meta:
         verbose_name = 'Messwert'
@@ -103,9 +85,4 @@ class IndicatedValue(models.Model):
         ordering = ['-date_created']
 
     def __str__(self):
-        return '%s %s' % (self.value, self.unit)
-
-    def save(self, *args, **kwargs):
-        #if not self.uuid:
-            #self.date_created = now()
-        super(IndicatedValue, self).save(*args, **kwargs)
+        return '%s %s' % (self.date_created, self.measuring_point)
