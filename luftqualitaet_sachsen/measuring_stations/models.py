@@ -69,9 +69,11 @@ class IndicatedValue(models.Model):
     BEN = 'BEN'
     PM10_TEOM = 'PM10TEOM'
     PM10 = 'PM10'
+    PM10_Pb = 'PM10_Pb'
     PM25 = 'PM2.5'
     EC = 'EC'
     OC = 'OC'
+    CO = 'CO'
     STI = 'STI'
     STNS = 'STNS'
     MET = 'MET'
@@ -82,10 +84,12 @@ class IndicatedValue(models.Model):
         (O3, 'O3'),
         (BEN, 'BEN'),
         (PM10_TEOM, 'PM10 TEOM'),
+        (PM10_Pb, 'PM10_Pb'),
         (PM10, 'PM10'),
         (PM25, 'PM2.5'),
         (EC, 'EC'),
         (OC, 'OC'),
+        (CO, 'CO'),
         (STI, 'ST-I'),
         (STNS, 'ST-NS'),
         (MET, 'Met.'),
