@@ -12,6 +12,12 @@
     {% endif %}
 {% endblock css %}
 
+{% block js_head %}
+    {{ block.super }}
+    <script src="{% static "js/vendor/dygraphs-1.0.1.min.js" %}"></script>
+    <script src="{% static "moment.min.js" %}"></script>
+{% endblock js_head %}
+
 {% block js %}
     {{ block.super }}
     <script src="{% static "ekko-lightbox.min.js" %}"></script>
@@ -44,6 +50,14 @@
         <small>{{ measuringpoint.get_category_display }}</small></h1>
     <div class="row">
         <div class="col-md-8">
+            <div id="graphdiv"></div>
+            <script>
+                g = new Dygraph(
+                    document.getElementById('graphdiv'),
+                    '{% url "measuring_stations_measuringpoint_csv" slug=object.slug %}',
+                    {xValueParser: function(x) { return 1000 * moment(x).format('X'); }}
+                );
+            </script>
         </div>
         <div class="col-md-4">
             <div class="panel panel-info">

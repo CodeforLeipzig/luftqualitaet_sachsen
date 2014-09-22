@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import csv
+
+from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -57,11 +60,18 @@ class MeasuringPoint(models.Model):
     def get_absolute_url(self):
         return reverse('measuring_stations_measuringpoint_detail', kwargs={'slug': self.slug})
 
+    def get_csv(self, csvfile):
+        writer = csv.writer(csvfile, lineterminator='\n')
+        model = apps.get_model('measuring_stations', 'IndicatedValue')
+        writer.writerow(model.get_csv_header())
+        writer.writerows(self.indicated_values.values_list(*model.csv_fields)[:50])
+        return csvfile
+
 
 @python_2_unicode_compatible
 class IndicatedValue(models.Model):
     uuid = UUIDField(auto=True, primary_key=True)
-    date_created = models.DateTimeField('Erstellt am')
+    date_created = models.DateTimeField('Datum')
     measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values', verbose_name='Messstelle')
     so2 = models.FloatField('SO2', default=0)
     no = models.FloatField('NO', default=0)
@@ -79,6 +89,10 @@ class IndicatedValue(models.Model):
     co = models.FloatField('CO', default=0)
     pm10_pb = models.FloatField('PM10 Pb', default=0)
 
+
+    csv_fields = ('date_created', 'so2', 'no', 'no2', 'o3', 'ben', 'pm10_teom', 'pm10', 'pm25',
+        'ec', 'oc', 'sti', 'stns', 'met', 'co', 'pm10_pb')
+
     class Meta:
         verbose_name = 'Messwert'
         verbose_name_plural = 'Messwerte'
@@ -87,3 +101,7 @@ class IndicatedValue(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.date_created, self.measuring_point)
+
+    @classmethod
+    def get_csv_header(cls):
+        return tuple([cls._meta.get_field(field).verbose_name for field in cls.csv_fields])
