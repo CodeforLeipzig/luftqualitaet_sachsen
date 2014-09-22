@@ -83,6 +83,7 @@ class IndicatedValue(models.Model):
         verbose_name = 'Messwert'
         verbose_name_plural = 'Messwerte'
         ordering = ['-date_created']
+        unique_together = ('date_created', 'measuring_point')
 
     def __str__(self):
         return '%s %s' % (self.date_created, self.measuring_point)
