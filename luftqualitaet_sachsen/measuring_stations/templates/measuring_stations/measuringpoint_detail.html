@@ -50,12 +50,18 @@
         <small>{{ measuringpoint.get_category_display }}</small></h1>
     <div class="row">
         <div class="col-md-8">
-            <div id="graphdiv"></div>
+            <div id="graphdiv" style="width: 100%;"></div>
             <script>
                 g = new Dygraph(
                     document.getElementById('graphdiv'),
                     '{% url "measuring_stations_measuringpoint_csv" slug=object.slug %}',
-                    {xValueParser: function(x) { return 1000 * moment(x).format('X'); }}
+                    {
+                        labelsDivStyles: { 'textAlign': 'right' },
+                        legend: 'always',
+                        showRangeSelector: true,
+                        title: 'Messwerte',
+                        xValueParser: function(x) { return 1000 * moment(x).format('X'); },
+                    }
                 );
             </script>
         </div>
