@@ -1,19 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import csv
+import datetime
 import sys
 from cStringIO import StringIO
 
 import gevent.monkey
 import requests
-import csv
-import ast
-import datetime
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
 from gevent.pool import Pool
 
-from measuring_stations.models import IndicatedValue, MeasuringPoint
+from ...models import IndicatedValue, MeasuringPoint
 
 
 class Command(BaseCommand):
@@ -38,6 +37,7 @@ class Command(BaseCommand):
         #"Leipzig-Thekla": "214",
         #"Leipzig-West": "213"
     }
+
     SCHADSTOFFE = {
         "BEN": "161;1",
         "NO": "121;0",
@@ -49,11 +49,13 @@ class Command(BaseCommand):
         "SO2": "22;1",
         "CO": "952;1",
     }
+
     MITTELWERT = {
         "STUNDEN": "45; 3600",
         "TAGE": "21; 86400",
         "MONATE": "177; 1",
     }
+
     ZEITRAUM = {
         "24H": "1",
         "48H": "2",
@@ -63,12 +65,14 @@ class Command(BaseCommand):
         "6M": "6",
         "1Y": "7"
     }
+
     STATION_SCHADSTOFF_MAP = {
         #"224": ["NO", "NO2", "PM10", "PM25"],
         #"211": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"],
         #"214": ["O3"],
         #"213": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"]
     }
+
     MITTELWERT_SCHADSTOFF_MAP = {
         "161;1": "STUNDEN",
         "121;0": "STUNDEN",
@@ -80,6 +84,7 @@ class Command(BaseCommand):
         "560;2": "MONATE",
         "952;1": "STUNDEN",
     }
+
     headers = {}
 
     def handle(self, *args, **options):
@@ -133,60 +138,60 @@ class Command(BaseCommand):
         schadstoffPool.join()
 
     def fetchSchadstoff(self, params, period):
-            response = self.s.post(self.URL, params, headers=self.headers)
-            soup = BeautifulSoup(response.text)
-            params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-            params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
-            params[self.MITTELWERT_KEY] = self.MITTELWERT[
-                self.MITTELWERT_SCHADSTOFF_MAP[params[self.SCHADSTOFF_KEY]]]
-            params[self.ZEITRAUM_KEY] = 0
-            params[self.TARGET_KEY] = self.MITTELWERT_KEY
+        response = self.s.post(self.URL, params, headers=self.headers)
+        soup = BeautifulSoup(response.text)
+        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
+        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        params[self.MITTELWERT_KEY] = self.MITTELWERT[
+            self.MITTELWERT_SCHADSTOFF_MAP[params[self.SCHADSTOFF_KEY]]]
+        params[self.ZEITRAUM_KEY] = 0
+        params[self.TARGET_KEY] = self.MITTELWERT_KEY
 
-            response = self.s.post(self.URL, params, headers=self.headers)
-            soup = BeautifulSoup(response.text)
+        response = self.s.post(self.URL, params, headers=self.headers)
+        soup = BeautifulSoup(response.text)
 
-            params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-            params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
-            params[self.ZEITRAUM_KEY] = self.ZEITRAUM[period]
-            params[self.TARGET_KEY] = self.ZEITRAUM_KEY
+        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
+        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        params[self.ZEITRAUM_KEY] = self.ZEITRAUM[period]
+        params[self.TARGET_KEY] = self.ZEITRAUM_KEY
 
-            response = self.s.post(self.URL, params, headers=self.headers)
-            soup = BeautifulSoup(response.text)
+        response = self.s.post(self.URL, params, headers=self.headers)
+        soup = BeautifulSoup(response.text)
 
-            params[self.BUTTON_KEY] = self.BUTTON_VALUE
-            params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-            params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
-            del params[self.TARGET_KEY]
-            
-            response = self.s.post(self.URL, params, headers=self.headers)
+        params[self.BUTTON_KEY] = self.BUTTON_VALUE
+        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
+        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        del params[self.TARGET_KEY]
 
-            if response.status_code == 200:
-                f = StringIO(response.content)
-                reader = csv.DictReader(f, delimiter=';')
-                stationName = self.inv_stations[params[self.STATION_KEY]]
-                print stationName
-                station = MeasuringPoint.objects.get(name=stationName)
-                unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
-                for row in reader:
-                    dateRow = row['Datum Zeit']
-                    if len(dateRow) > 0:
-                        date = self.try_parsing_date(dateRow)
-                        value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
-                    
-                        if value.find(',') > -1:
-                            value = float(value.replace(",","."))
-                            
-                        if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
-                            value = float(value)
-                            IndicatedValue.objects.create(unit=unit,
-                                                        date_created=date,
-                                                        measuring_point=station,
-                                                        value=value)
-                f.close
-                
+        response = self.s.post(self.URL, params, headers=self.headers)
+
+        if response.status_code == 200:
+            f = StringIO(response.content)
+            reader = csv.DictReader(f, delimiter=';')
+            stationName = self.inv_stations[params[self.STATION_KEY]]
+            print stationName
+            station = MeasuringPoint.objects.get(name=stationName)
+            unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
+            for row in reader:
+                dateRow = row['Datum Zeit']
+                if len(dateRow) > 0:
+                    date = self.try_parsing_date(dateRow)
+                    value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
+
+                    if value.find(',') > -1:
+                        value = float(value.replace(",","."))
+
+                    if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
+                        value = float(value)
+                        IndicatedValue.objects.create(unit=unit,
+                                                    date_created=date,
+                                                    measuring_point=station,
+                                                    value=value)
+            f.close
+
     def invert_dict(self, d):
         return dict([(v, k) for k, v in d.iteritems()])
-    
+
     def try_parsing_date(self, text):
         for fmt in ('%d-%m-%y %H:%M', '%d-%m-%y'):
             try:
