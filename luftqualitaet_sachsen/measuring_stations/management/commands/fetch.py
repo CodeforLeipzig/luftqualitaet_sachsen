@@ -153,7 +153,7 @@ class Command(BaseCommand):
             stationName = self.inv_stations[params[self.STATION_KEY]]
             self.stdout.write(stationName)
             try:
-                station = MeasuringPoint.objects.get(name=stationName)
+                station = MeasuringPoint.objects.get(form_id=params[self.STATION_KEY])
             except MeasuringPoint.DoesNotExist:
                 self.stderr.write(u'MeasuringPoint "{0}"" not found'.format(stationName))
                 return
