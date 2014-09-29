@@ -165,7 +165,7 @@ class Command(BaseCommand):
                     try:
                         date = parser.parse(dateRow)
                         if timezone.is_naive(date):
-                            date = timezone.make_aware(parser.parse(date), self.tz)
+                            date = timezone.make_aware(date, self.tz)
                     except ValueError:
                         continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
