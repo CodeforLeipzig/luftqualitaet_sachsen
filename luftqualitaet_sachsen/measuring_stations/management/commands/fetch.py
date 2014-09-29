@@ -10,6 +10,7 @@ from dateutil import parser
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from gevent.pool import Pool
+from pytz.exceptions import NonExistentTimeError
 from requests import exceptions
 
 from ...models import IndicatedValue, MeasuringPoint
@@ -164,7 +165,10 @@ class Command(BaseCommand):
                     try:
                         date = parser.parse(dateRow)
                         if timezone.is_naive(date):
-                            date = timezone.make_aware(date, self.tz)
+                            try:
+                                date = timezone.make_aware(date, self.tz)
+                            except NonExistentTimeError as e:
+                                self.stderr.write(str(e))
                     except ValueError:
                         self.stderr.write('Failed to parse date "{0}"'.format(dateRow))
                         continue
