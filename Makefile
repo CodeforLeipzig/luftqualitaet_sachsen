@@ -41,12 +41,14 @@ install:
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
+	bower install
 
 install-test:
 	pip install -U --no-deps -r requirements/test.txt
 
 install-osx:
 	pip install -U --no-deps -r requirements/osx.txt
+	bower install
 
 create-db:
 	createuser -d -e -P luftqualitaet_sachsen
