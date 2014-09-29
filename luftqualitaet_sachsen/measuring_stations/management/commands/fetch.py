@@ -176,8 +176,9 @@ class Command(BaseCommand):
                     if value.find(',') > -1:
                         value = float(value.replace(",","."))
                     if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
+                        unit = unit.lower().replace('.', '')
                         IndicatedValue.objects.update_or_create(date_created=date,
-                                    measuring_point=station, defaults={unit.lower(): float(value)})
+                                    measuring_point=station, defaults={unit: float(value)})
 
     @classmethod
     def invert_dict(cls, d):
