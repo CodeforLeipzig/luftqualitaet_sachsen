@@ -3,7 +3,6 @@
 
 import csv
 import sys
-from cStringIO import StringIO
 
 import gevent.monkey
 import requests
@@ -153,11 +152,13 @@ class Command(BaseCommand):
         response = self.s.post(self.URL, params, headers=self.headers)
 
         if response.status_code == 200:
-            f = StringIO(response.content)
-            reader = csv.DictReader(f, delimiter=';')
+            reader = csv.DictReader(response.content.splitlines(), delimiter=';')
             stationName = self.inv_stations[params[self.STATION_KEY]]
             self.stdout.write(stationName)
-            station = MeasuringPoint.objects.get(name=stationName)
+            try:
+                station = MeasuringPoint.objects.get(name=stationName)
+            except MeasuringPoint.DoesNotExist:
+                return
             unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
             for row in reader:
                 dateRow = row['Datum Zeit']
@@ -174,7 +175,6 @@ class Command(BaseCommand):
                     if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
                         IndicatedValue.objects.update_or_create(date_created=date,
                                     measuring_point=station, defaults={unit.lower(): float(value)})
-            f.close
 
     @classmethod
     def invert_dict(cls, d):
