@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic import DetailView
 from django.shortcuts import render
+from geopy import distance
 
 from .models import MeasuringPoint
 
@@ -12,6 +13,17 @@ def overview(request):
 
 class MeasuringPointDetailView(DetailView):
     model = MeasuringPoint
+
+    def nearest_stations(self):
+        results = []
+        for station in self.model.objects.exclude(slug=self.object.slug):
+            d = distance.distance(
+                (self.object.position.latitude, self.object.position.longitude),
+                (station.position.latitude, station.position.longitude)
+            )
+            results.append({'distance': d, 'obj': station})
+        results = sorted(results, key=lambda k: k['distance'])
+        return results[:5]
 
 
 class MeasuringPointCSVView(DetailView):

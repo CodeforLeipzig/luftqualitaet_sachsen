@@ -92,6 +92,19 @@
                         {% leaflet_map "measuringpointmap" %}
                     {% endif %}
                 </div>
+                <div class="panel-footer">
+                    Nächstgelegene Stationen
+                </div>
+                <div class="panel-body">
+                    <table class="table table-condensed">
+                        {% for station in view.nearest_stations %}
+                            <tr>
+                                <td><a href="{% url "measuring_stations_measuringpoint_detail" station.obj.slug %}">{{ station.obj.name }}</a></td>
+                                <td><a href="{% url "measuring_stations_measuringpoint_detail" station.obj.slug %}">{{ station.distance.km|floatformat }} km</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
