@@ -9,6 +9,7 @@ from cStringIO import StringIO
 import gevent.monkey
 import requests
 from bs4 import BeautifulSoup
+from dateutil import parser
 from django.core.management.base import BaseCommand
 from gevent.pool import Pool
 
@@ -175,7 +176,10 @@ class Command(BaseCommand):
             for row in reader:
                 dateRow = row['Datum Zeit']
                 if len(dateRow) > 0:
-                    date = self.try_parsing_date(dateRow)
+                    try:
+                        parser.parse(dateRow)
+                    except ValueError:
+                        continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
 
                     if value.find(',') > -1:
@@ -191,11 +195,3 @@ class Command(BaseCommand):
 
     def invert_dict(self, d):
         return dict([(v, k) for k, v in d.iteritems()])
-
-    def try_parsing_date(self, text):
-        for fmt in ('%d-%m-%y %H:%M', '%d-%m-%y'):
-            try:
-                return datetime.datetime.strptime(text, fmt)
-            except ValueError:
-                pass
-        raise ValueError('no valid date format found')
