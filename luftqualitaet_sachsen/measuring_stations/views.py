@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.views.generic import DetailView
 from django.shortcuts import render
 
@@ -11,3 +12,12 @@ def overview(request):
 
 class MeasuringPointDetailView(DetailView):
     model = MeasuringPoint
+
+
+class MeasuringPointCSVView(DetailView):
+    model = MeasuringPoint
+
+    def render_to_response(self, context, **response_kwargs):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="%s.csv"' % self.object.slug
+        return self.object.get_csv(response)
