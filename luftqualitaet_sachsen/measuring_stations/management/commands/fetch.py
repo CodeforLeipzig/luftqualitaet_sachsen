@@ -193,5 +193,6 @@ class Command(BaseCommand):
                                                     value=value)
             f.close
 
-    def invert_dict(self, d):
+    @classmethod
+    def invert_dict(cls, d):
         return dict([(v, k) for k, v in d.iteritems()])
