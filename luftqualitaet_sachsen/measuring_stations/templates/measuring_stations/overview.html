@@ -13,6 +13,12 @@
     {% leaflet_css %}
 {% endblock css %}
 
+{% block js_head %}
+    {{ block.super }}
+    <script src="{% static "js/vendor/dygraphs-1.0.1.min.js" %}"></script>
+    <script src="{% static "moment.min.js" %}"></script>
+{% endblock js_head %}
+
 {% block js %}
     {{ block.super }}
     <script type="text/javascript">
@@ -30,12 +36,31 @@
             {% for marker in measuring_points %}
                 {% if marker.position.latitude %}
                     {% localize off %}
-                        L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
-                            .addTo(map).bindPopup("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}");
+                        var popup = L.popup({minWidth: 400}).setContent("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}")
+                        var marker = L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
+                            .addTo(map).bindPopup(popup, {});
+                        marker.on('click', (function(){
+                            showGraph('{% url "measuring_stations_measuringpoint_csv" slug=marker.slug %}');
+                        }));
+
                     {% endlocalize %}
                 {% endif %}
             {% endfor %}
         }
+
+        var showGraph = function(url) {
+            return new Dygraph(
+                document.getElementById('graphdiv'),
+                url,
+                {
+                    labelsDivStyles: { 'textAlign': 'right' },
+                    rightGap: 50,
+                    xValueParser: function(x) { return 1000 * moment(x).format('X'); },
+                    
+                }
+            );
+        }
+
 
     </script>
     {% leaflet_js %}
