@@ -6,10 +6,11 @@
         "amsl": 545,
         "name": "Annaberg-Buchholz",
         "image": "",
-        "slug": "annaberg-buchholz",
+        "eu_typing": 1,
         "location": "Talstr./Str. der Einheit",
         "position": "50.57054638792572,12.997174064001456",
-        "eu_typing": 1
+        "slug": "annaberg-buchholz",
+        "form_id": 61
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 1
@@ -21,10 +22,11 @@
         "amsl": 203,
         "name": "Bautzen",
         "image": "",
-        "slug": "bautzen",
+        "eu_typing": 1,
         "location": "Stieberstr./Goethestr.",
         "position": "51.17551570000001,14.44209269999999",
-        "eu_typing": 1
+        "slug": "bautzen",
+        "form_id": 193
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 2
@@ -36,10 +38,11 @@
         "amsl": 145,
         "name": "Borna",
         "image": "",
-        "slug": "borna",
+        "eu_typing": 2,
         "location": "Sachsenallee 45",
         "position": "51.12541906598371,12.494145643585966",
-        "eu_typing": 2
+        "slug": "borna",
+        "form_id": 221
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 3
@@ -51,10 +54,11 @@
         "amsl": 430,
         "name": "Brockau",
         "image": "",
-        "slug": "brockau",
+        "eu_typing": 6,
         "location": "Elsterberger Str. 4",
         "position": "50.60814362028454,12.21079014715201",
-        "eu_typing": 6
+        "slug": "brockau",
+        "form_id": 24
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 4
@@ -66,10 +70,11 @@
         "amsl": 896,
         "name": "Carlsfeld",
         "image": "",
-        "slug": "carlsfeld",
+        "eu_typing": 7,
         "location": "Weitersglashu\u0308tte 2a",
         "position": "50.4275710878385,12.61538710859827",
-        "eu_typing": 7
+        "slug": "carlsfeld",
+        "form_id": 93
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 5
@@ -81,10 +86,11 @@
         "amsl": 300,
         "name": "Chemnitz-Mitte",
         "image": "",
-        "slug": "chemnitz-mitte",
+        "eu_typing": 1,
         "location": "Lohstra\u00dfe",
         "position": "50.832456342616,12.91733612520079",
-        "eu_typing": 1
+        "slug": "chemnitz-mitte",
+        "form_id": 71
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 6
@@ -96,10 +102,11 @@
         "amsl": null,
         "name": "Chemnitz-Leipziger Str.",
         "image": "",
-        "slug": "chemnitz-leipziger-str",
+        "eu_typing": 2,
         "location": "Leipziger Str. 109",
         "position": "50.84563379999999,12.903334399999949",
-        "eu_typing": 2
+        "slug": "chemnitz-leipziger-str",
+        "form_id": 73
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 7
@@ -110,11 +117,12 @@
         "city": "Collm",
         "amsl": 313,
         "name": "Collmberg",
-        "image": "",
-        "slug": "collmberg",
+        "image": "measuring_stations/3186143355_4840fb7620.jpg",
+        "eu_typing": 6,
         "location": "Gipfelplateau",
         "position": "51.30380038301377,13.009387912750299",
-        "eu_typing": 6
+        "slug": "collmberg",
+        "form_id": 223
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 8
@@ -126,10 +134,11 @@
         "amsl": 112,
         "name": "Dresden-Nord",
         "image": "",
-        "slug": "dresden-nord",
+        "eu_typing": 2,
         "location": "Schlesischer Platz",
         "position": "51.06494687274071,13.741394482070177",
-        "eu_typing": 2
+        "slug": "dresden-nord",
+        "form_id": 112
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 9
@@ -139,12 +148,13 @@
         "category": 2,
         "city": "Dresden",
         "amsl": 116,
-        "name": "Dresden-Winckelmannstr.",
+        "name": "Dresden-Wickelmannstr",
         "image": "",
-        "slug": "dresden-wickelmannstr",
+        "eu_typing": 1,
         "location": "Wickelmannstr./Schnorrstr.",
         "position": "51.03606546661098,13.730249341698936",
-        "eu_typing": 1
+        "slug": "dresden-wickelmannstr",
+        "form_id": 118
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 10
@@ -154,12 +164,13 @@
         "category": 3,
         "city": "Dresden",
         "amsl": 150,
-        "name": "Dresden-Bergstraße",
+        "name": "Dresden-Bergstr.",
         "image": "",
-        "slug": "dresden-bergstr",
+        "eu_typing": 2,
         "location": "Bergstr. 78-80",
         "position": "51.026299030200136,13.731575963806335",
-        "eu_typing": 2
+        "slug": "dresden-bergstr",
+        "form_id": 114
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 11
@@ -171,10 +182,11 @@
         "amsl": 1214,
         "name": "Fichtelberg",
         "image": "",
-        "slug": "fichtelberg",
+        "eu_typing": 7,
         "location": "Gipfelplateau",
         "position": "50.42831617139393,12.953554209526146",
-        "eu_typing": 7
+        "slug": "fichtelberg",
+        "form_id": 92
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 12
@@ -186,10 +198,11 @@
         "amsl": 393,
         "name": "Freiberg",
         "image": "",
-        "slug": "freiberg",
+        "eu_typing": 1,
         "location": "Helmertplatz",
         "position": "50.91629899697673,13.346792746032747",
-        "eu_typing": 1
+        "slug": "freiberg",
+        "form_id": 91
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 13
@@ -201,10 +214,11 @@
         "amsl": 233,
         "name": "Glauchau",
         "image": "",
-        "slug": "glauchau",
+        "eu_typing": 1,
         "location": "Gu\u0308terbahnhofstr. 25",
         "position": "50.82601628037594,12.542019398811362",
-        "eu_typing": 1
+        "slug": "glauchau",
+        "form_id": 42
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 14
@@ -214,12 +228,13 @@
         "category": 3,
         "city": "G\u00f6rlitz",
         "amsl": 210,
-        "name": "Goerlitz",
+        "name": "Go\u0308rlitz",
         "image": "",
-        "slug": "gorlitz",
+        "eu_typing": 2,
         "location": "Zeppelinstr. 10",
         "position": "51.15579270826004,14.973981109123201",
-        "eu_typing": 2
+        "slug": "gorlitz",
+        "form_id": 131
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 15
@@ -231,10 +246,11 @@
         "amsl": 540,
         "name": "Klingenthal",
         "image": "",
-        "slug": "klingenthal",
+        "eu_typing": 1,
         "location": "Graslitzer Stra\u00dfe",
         "position": "50.354734491288745,12.468934914224974",
-        "eu_typing": 1
+        "slug": "klingenthal",
+        "form_id": 11
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 16
@@ -244,12 +260,13 @@
         "category": 3,
         "city": "Leipzig",
         "amsl": 110,
-        "name": "Leipzig-Luetzner Straße",
+        "name": "Leipzig-Lu\u0308tzner Str.",
         "image": "",
-        "slug": "leipzig-lutzner-str",
+        "eu_typing": 2,
         "location": "Lu\u0308tzner Str. 36",
         "position": "51.3359500950666,12.334441225864339",
-        "eu_typing": 2
+        "slug": "leipzig-lutzner-str",
+        "form_id": 224
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 17
@@ -261,10 +278,11 @@
         "amsl": 110,
         "name": "Leipzig-Mitte",
         "image": "",
-        "slug": "leipzig-mitte",
+        "eu_typing": 2,
         "location": "Willy-Brandt-Platz/Am Hallischen Tor",
         "position": "51.34416689213637,12.377150085913854",
-        "eu_typing": 2
+        "slug": "leipzig-mitte",
+        "form_id": 211
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 18
@@ -276,10 +294,11 @@
         "amsl": 115,
         "name": "Leipzig-West",
         "image": "",
-        "slug": "leipzig-west",
+        "eu_typing": 1,
         "location": "Nikolai-Rumjanzew-Str. 100",
         "position": "51.3155967,12.302339800000027",
-        "eu_typing": 1
+        "slug": "leipzig-west",
+        "form_id": 213
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 19
@@ -291,10 +310,11 @@
         "amsl": 110,
         "name": "Leipzig-Thekla",
         "image": "",
-        "slug": "leipzig-thekla",
+        "eu_typing": 3,
         "location": "Kiebitzstr.",
         "position": "51.377485,12.426725199999964",
-        "eu_typing": 3
+        "slug": "leipzig-thekla",
+        "form_id": 214
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 20
@@ -306,10 +326,11 @@
         "amsl": 148,
         "name": "Niesky",
         "image": "",
-        "slug": "niesky",
+        "eu_typing": 5,
         "location": "Sproitz, An der Aue",
         "position": "51.2879136,14.748826300000019",
-        "eu_typing": 5
+        "slug": "niesky",
+        "form_id": 132
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 21
@@ -321,10 +342,11 @@
         "amsl": 385,
         "name": "Plauen DWD",
         "image": "",
-        "slug": "plauen-dwd",
+        "eu_typing": 3,
         "location": "Nach den Drei Bergen 2a",
         "position": "50.48166709256876,12.130440845403655",
-        "eu_typing": 3
+        "slug": "plauen-dwd",
+        "form_id": 23
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 22
@@ -334,12 +356,13 @@
         "category": 3,
         "city": "Plauen",
         "amsl": 343,
-        "name": "Plauen-Sued",
+        "name": "Plauen Su\u0308d",
         "image": "",
-        "slug": "plauen-sud",
+        "eu_typing": 2,
         "location": "Hofer Landstr./Oelsnitzer Str.",
         "position": "50.48613544219208,12.138032524085588",
-        "eu_typing": 2
+        "slug": "plauen-sud",
+        "form_id": 22
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 23
@@ -351,10 +374,11 @@
         "amsl": 246,
         "name": "Radebeul-Wahnsdorf",
         "image": "",
-        "slug": "radebeul-wahnsdorf",
+        "eu_typing": 4,
         "location": "Altwahnsdorf 12",
         "position": "51.11738407793989,13.675463847885112",
-        "eu_typing": 4
+        "slug": "radebeul-wahnsdorf",
+        "form_id": 191
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 24
@@ -366,10 +390,11 @@
         "amsl": 122,
         "name": "Schkeuditz",
         "image": "",
-        "slug": "schkeuditz",
+        "eu_typing": 4,
         "location": "Leipziger Str. 59",
         "position": "51.39362999999999,12.233600000000024",
-        "eu_typing": 4
+        "slug": "schkeuditz",
+        "form_id": 225
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 25
@@ -381,10 +406,11 @@
         "amsl": 785,
         "name": "Schwartenberg",
         "image": "",
-        "slug": "schwartenberg",
+        "eu_typing": 7,
         "location": "Gipfel",
         "position": "50.65913439355386,13.464980074799314",
-        "eu_typing": 7
+        "slug": "schwartenberg",
+        "form_id": 81
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 26
@@ -396,10 +422,11 @@
         "amsl": 877,
         "name": "Zinnwald",
         "image": "",
-        "slug": "zinnwald",
+        "eu_typing": 7,
         "location": "Hochmoorweg 7",
         "position": "50.73148,13.75183000000004",
-        "eu_typing": 7
+        "slug": "zinnwald",
+        "form_id": 195
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 27
@@ -411,10 +438,11 @@
         "amsl": 230,
         "name": "Zittau-Ost",
         "image": "",
-        "slug": "zittau-ost",
+        "eu_typing": 3,
         "location": "Bru\u0308ckenstr. 12",
         "position": "50.892256425641726,14.82255206878665",
-        "eu_typing": 3
+        "slug": "zittau-ost",
+        "form_id": 121
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 28
@@ -424,12 +452,13 @@
         "category": 3,
         "city": "Zwickau",
         "amsl": 267,
-        "name": "Zwickau-Werdauer Straße",
+        "name": "Zwickau Werdauer Str.",
         "image": "",
-        "slug": "zwickau-werdauer-str",
+        "eu_typing": 2,
         "location": "Werdauer Str./Crimmitschauer Str.",
         "position": "50.720009991056166,12.488608430810586",
-        "eu_typing": 2
+        "slug": "zwickau-werdauer-str",
+        "form_id": 44
     },
     "model": "measuring_stations.measuringpoint",
     "pk": 29

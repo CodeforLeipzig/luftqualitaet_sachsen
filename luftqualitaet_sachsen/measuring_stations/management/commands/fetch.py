@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import csv
 import sys
-from cStringIO import StringIO
 
 import gevent.monkey
 import requests
@@ -12,6 +10,7 @@ from dateutil import parser
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from gevent.pool import Pool
+from requests import exceptions
 
 from ...models import IndicatedValue, MeasuringPoint
 
@@ -73,6 +72,7 @@ class Command(BaseCommand):
     }
 
     headers = {}
+    params = {}
 
     def handle(self, *args, **options):
         if len(args) < 1 or not(args[0] in self.ZEITRAUM.keys()):
@@ -84,13 +84,10 @@ class Command(BaseCommand):
         params = {}
         self.s = requests.Session()
         self.tz = timezone.get_current_timezone()
-        response = self.s.post(self.URL, params, headers=self.headers)
-        soup = BeautifulSoup(response.text)
+        response, soup = self.post(params)
         stations = soup.find(id=self.STATION_ID).find_all('option')
         for station in stations:
             self.STATIONEN[station.string] = station['value']
-        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
         params[self.TARGET_KEY] = self.STATION_KEY
 
         stationPool = Pool(len(self.STATIONEN))
@@ -99,18 +96,14 @@ class Command(BaseCommand):
         #self.inv_schadstoff['109;2'] = 'PM2.5' # csv uses PM2.5
 
         for station in self.STATIONEN.keys():
-            tmp = dict(params)
+            tmp = params.copy()
             tmp[self.STATION_KEY] = self.STATIONEN[station]
             stationPool.spawn(self.fetchStation, tmp, args[0])
 
         stationPool.join()
 
     def fetchStation(self, params, period):
-        response = self.s.post(self.URL, params, headers=self.headers)
-        soup = BeautifulSoup(response.text)
-
-        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        response, soup = self.post(params)
         schadstoffe = soup.find(id=self.SCHADSTOFF_ID).find_all('option')
         schadstoffList = []
         for schadstoff in schadstoffe:
@@ -124,49 +117,56 @@ class Command(BaseCommand):
 
         schadstoffPool.join()
 
+    def post(self, params):
+        response = soup = None
+        params.update(self.params)
+        try:
+            response = self.s.post(self.URL, params)
+            soup = BeautifulSoup(response.text)
+            for key in (self.VALIDATION_KEY, self.VIEWSTATE_KEY):
+                try:
+                    self.params[key] = soup.find(id=key)['value']
+                except TypeError:
+                    pass
+        except exceptions.ConnectionError as e:
+            self.stderr.write(str(e))
+        return response, soup
+
     def fetchSchadstoff(self, params, period):
-        response = self.s.post(self.URL, params, headers=self.headers)
-        soup = BeautifulSoup(response.text)
-        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        response, soup = self.post(params)
         params[self.MITTELWERT_KEY] = self.MITTELWERT[
             self.MITTELWERT_SCHADSTOFF_MAP[params[self.SCHADSTOFF_KEY]]]
         params[self.ZEITRAUM_KEY] = 0
         params[self.TARGET_KEY] = self.MITTELWERT_KEY
 
-        response = self.s.post(self.URL, params, headers=self.headers)
-        soup = BeautifulSoup(response.text)
-
-        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
+        response, soup = self.post(params)
         params[self.ZEITRAUM_KEY] = self.ZEITRAUM[period]
         params[self.TARGET_KEY] = self.ZEITRAUM_KEY
 
-        response = self.s.post(self.URL, params, headers=self.headers)
-        soup = BeautifulSoup(response.text)
-
+        response, soup = self.post(params)
         params[self.BUTTON_KEY] = self.BUTTON_VALUE
-        params[self.VALIDATION_KEY] = soup.find(id=self.VALIDATION_KEY)['value']
-        params[self.VIEWSTATE_KEY] = soup.find(id=self.VIEWSTATE_KEY)['value']
         del params[self.TARGET_KEY]
 
-        response = self.s.post(self.URL, params, headers=self.headers)
-
+        response, soup = self.post(params)
         if response.status_code == 200:
-            f = StringIO(response.content)
-            reader = csv.DictReader(f, delimiter=';')
+            reader = csv.DictReader(response.content.splitlines(), delimiter=';')
             stationName = self.inv_stations[params[self.STATION_KEY]]
             self.stdout.write(stationName)
-            station = MeasuringPoint.objects.get(name=stationName)
+            try:
+                station = MeasuringPoint.objects.get(form_id=params[self.STATION_KEY])
+            except MeasuringPoint.DoesNotExist:
+                self.stderr.write(u'MeasuringPoint "{0}"" not found'.format(stationName))
+                return
             unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
             for row in reader:
-                dateRow = row['Datum Zeit']
-                if len(dateRow) > 0:
+                dateRow = row.get('Datum Zeit', '')
+                if len(dateRow):
                     try:
                         date = parser.parse(dateRow)
                         if timezone.is_naive(date):
-                            date = timezone.make_aware(parser.parse(date), self.tz)
+                            date = timezone.make_aware(date, self.tz)
                     except ValueError:
+                        self.stderr.write('Failed to parse date "{0}"'.format(dateRow))
                         continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
                     if value.find(',') > -1:
@@ -174,7 +174,6 @@ class Command(BaseCommand):
                     if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
                         IndicatedValue.objects.update_or_create(date_created=date,
                                     measuring_point=station, defaults={unit.lower(): float(value)})
-            f.close
 
     @classmethod
     def invert_dict(cls, d):
