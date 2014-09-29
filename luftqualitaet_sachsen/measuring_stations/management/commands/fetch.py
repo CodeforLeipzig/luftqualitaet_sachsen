@@ -32,13 +32,7 @@ class Command(BaseCommand):
     BUTTON_KEY = "ctl00$Inhalt$BtnCsvDown"
     BUTTON_VALUE = "CSV-Download"
 
-    STATIONEN = {
-        #"Leipzig-Luetzner Straße": "224",
-        #"Leipzig-Mitte": "211",
-        #"Leipzig-Thekla": "214",
-        #"Leipzig-West": "213"
-    }
-
+    STATIONEN = {}
     SCHADSTOFFE = {
         "BEN": "161;1",
         "NO": "121;0",
@@ -66,14 +60,6 @@ class Command(BaseCommand):
         "6M": "6",
         "1Y": "7"
     }
-
-    STATION_SCHADSTOFF_MAP = {
-        #"224": ["NO", "NO2", "PM10", "PM25"],
-        #"211": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"],
-        #"214": ["O3"],
-        #"213": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"]
-    }
-
     MITTELWERT_SCHADSTOFF_MAP = {
         "161;1": "STUNDEN",
         "121;0": "STUNDEN",
@@ -184,13 +170,10 @@ class Command(BaseCommand):
 
                     if value.find(',') > -1:
                         value = float(value.replace(",","."))
-
+                        
                     if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
-                        value = float(value)
-                        IndicatedValue.objects.create(unit=unit,
-                                                    date_created=date,
-                                                    measuring_point=station,
-                                                    value=value)
+                        IndicatedValue.objects.update_or_create(date_created=date,
+                                    measuring_point=station, defaults={unit.lower(): float(value)})
             f.close
 
     def invert_dict(self, d):
