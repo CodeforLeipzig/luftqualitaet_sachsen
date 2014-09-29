@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import csv
-import datetime
 import sys
 from cStringIO import StringIO
 
 import gevent.monkey
 import requests
 from bs4 import BeautifulSoup
+from dateutil import parser
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from gevent.pool import Pool
 
 from ...models import IndicatedValue, MeasuringPoint
@@ -31,13 +32,7 @@ class Command(BaseCommand):
     BUTTON_KEY = "ctl00$Inhalt$BtnCsvDown"
     BUTTON_VALUE = "CSV-Download"
 
-    STATIONEN = {
-        #"Leipzig-Luetzner Straße": "224",
-        #"Leipzig-Mitte": "211",
-        #"Leipzig-Thekla": "214",
-        #"Leipzig-West": "213"
-    }
-
+    STATIONEN = {}
     SCHADSTOFFE = {
         "BEN": "161;1",
         "NO": "121;0",
@@ -65,14 +60,6 @@ class Command(BaseCommand):
         "6M": "6",
         "1Y": "7"
     }
-
-    STATION_SCHADSTOFF_MAP = {
-        #"224": ["NO", "NO2", "PM10", "PM25"],
-        #"211": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"],
-        #"214": ["O3"],
-        #"213": ["BEN", "NO", "NO2", "O3", "PM10", "PM25", "SO2"]
-    }
-
     MITTELWERT_SCHADSTOFF_MAP = {
         "161;1": "STUNDEN",
         "121;0": "STUNDEN",
@@ -96,7 +83,7 @@ class Command(BaseCommand):
 
         params = {}
         self.s = requests.Session()
-
+        self.tz = timezone.get_current_timezone()
         response = self.s.post(self.URL, params, headers=self.headers)
         soup = BeautifulSoup(response.text)
         stations = soup.find(id=self.STATION_ID).find_all('option')
@@ -169,33 +156,26 @@ class Command(BaseCommand):
             f = StringIO(response.content)
             reader = csv.DictReader(f, delimiter=';')
             stationName = self.inv_stations[params[self.STATION_KEY]]
-            print stationName
+            self.stdout.write(stationName)
             station = MeasuringPoint.objects.get(name=stationName)
             unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
             for row in reader:
                 dateRow = row['Datum Zeit']
                 if len(dateRow) > 0:
-                    date = self.try_parsing_date(dateRow)
+                    try:
+                        date = parser.parse(dateRow)
+                        if timezone.is_naive(date):
+                            date = timezone.make_aware(parser.parse(date), self.tz)
+                    except ValueError:
+                        continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
-
                     if value.find(',') > -1:
                         value = float(value.replace(",","."))
-
                     if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
-                        value = float(value)
-                        IndicatedValue.objects.create(unit=unit,
-                                                    date_created=date,
-                                                    measuring_point=station,
-                                                    value=value)
+                        IndicatedValue.objects.update_or_create(date_created=date,
+                                    measuring_point=station, defaults={unit.lower(): float(value)})
             f.close
 
-    def invert_dict(self, d):
+    @classmethod
+    def invert_dict(cls, d):
         return dict([(v, k) for k, v in d.iteritems()])
-
-    def try_parsing_date(self, text):
-        for fmt in ('%d-%m-%y %H:%M', '%d-%m-%y'):
-            try:
-                return datetime.datetime.strptime(text, fmt)
-            except ValueError:
-                pass
-        raise ValueError('no valid date format found')
