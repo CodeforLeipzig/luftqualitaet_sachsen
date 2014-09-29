@@ -176,5 +176,6 @@ class Command(BaseCommand):
                                     measuring_point=station, defaults={unit.lower(): float(value)})
             f.close
 
-    def invert_dict(self, d):
+    @classmethod
+    def invert_dict(cls, d):
         return dict([(v, k) for k, v in d.iteritems()])

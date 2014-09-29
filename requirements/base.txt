@@ -20,6 +20,7 @@ envdir==0.6.1
 gevent==1.0.1
 greenlet==0.4.2
 psycopg2==2.5.3
+python-dateutil==1.5
 pytz==2014.3
 requests==2.2.1
 six==1.6.1
