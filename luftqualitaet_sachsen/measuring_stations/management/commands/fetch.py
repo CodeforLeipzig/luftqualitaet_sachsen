@@ -177,7 +177,7 @@ class Command(BaseCommand):
                 dateRow = row['Datum Zeit']
                 if len(dateRow) > 0:
                     try:
-                        parser.parse(dateRow)
+                        date = parser.parse(dateRow)
                     except ValueError:
                         continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
