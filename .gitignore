@@ -6,3 +6,4 @@ htmlcov
 media
 static_root
 *.pyc
+use
