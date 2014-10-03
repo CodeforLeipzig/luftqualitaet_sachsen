@@ -94,7 +94,7 @@ class Command(BaseCommand):
         stationPool = Pool(len(self.STATIONEN))
         self.inv_stations = self.invert_dict(self.STATIONEN)
         self.inv_schadstoff = self.invert_dict(self.SCHADSTOFFE)
-        #self.inv_schadstoff['109;2'] = 'PM2.5' # csv uses PM2.5
+        # self.inv_schadstoff['109;2'] = 'PM2.5' # csv uses PM2.5
 
         for station in self.STATIONEN.keys():
             tmp = params.copy()
@@ -174,8 +174,9 @@ class Command(BaseCommand):
                         continue
                     value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
                     if value.find(',') > -1:
-                        value = float(value.replace(",","."))
-                    if (isinstance(value, float) or (value.find('g/m') == -1 and value.find('n. def.') == -1)):
+                        value = float(value.replace(',', '.'))
+                    is_float = isinstance(value, float)
+                    if is_float or (value.find('g/m') == -1 and value.find('n. def.') == -1):
                         unit = unit.lower().replace('.', '')
                         IndicatedValue.objects.update_or_create(date_created=date,
                                     measuring_point=station, defaults={unit: float(value)})

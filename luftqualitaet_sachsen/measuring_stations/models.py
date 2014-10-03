@@ -73,7 +73,8 @@ class MeasuringPoint(models.Model):
 class IndicatedValue(models.Model):
     uuid = UUIDField(auto=True, primary_key=True)
     date_created = models.DateTimeField('Datum')
-    measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values', verbose_name='Messstelle')
+    measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values',
+        verbose_name='Messstelle')
     so2 = models.FloatField('SO2', default=0)
     no = models.FloatField('NO', default=0)
     no2 = models.FloatField('NO2', default=0)
@@ -89,8 +90,6 @@ class IndicatedValue(models.Model):
     met = models.FloatField('MET', default=0)
     co = models.FloatField('CO', default=0)
     pm10_pb = models.FloatField('PM10 Pb', default=0)
-
-
     csv_fields = ('date_created', 'so2', 'no', 'no2', 'o3', 'ben', 'pm10_teom', 'pm10', 'pm25',
         'ec', 'oc', 'sti', 'stns', 'met', 'co', 'pm10_pb')
 
