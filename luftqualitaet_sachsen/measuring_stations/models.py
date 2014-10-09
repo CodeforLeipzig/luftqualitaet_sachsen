@@ -12,8 +12,20 @@ from uuidfield import UUIDField
 from easy_thumbnails.fields import ThumbnailerImageField
 
 
+class ValueFields(models.Model):
+    value_fields = ('so2', 'no', 'no2', 'o3', 'ben', 'pm10_teom', 'pm10', 'pm25', 'ec', 'oc',
+        'sti', 'stns', 'met', 'co', 'pm10_pb')
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def get_verbose_names(cls, fields):
+        return tuple([cls._meta.get_field(field).verbose_name for field in fields])
+
+
 @python_2_unicode_compatible
-class MeasuringPoint(models.Model):
+class MeasuringPoint(ValueFields):
     EU_TYPING_CITY_BACKGROUND = 1
     EU_TYPING_CITY_TRAFFIC = 2
     EU_TYPING_SUBURBAN = 3
@@ -41,7 +53,8 @@ class MeasuringPoint(models.Model):
     name = models.CharField('Name', max_length=100, unique=True)
     slug = models.SlugField(unique=True)
     form_id = models.IntegerField('Formular ID', unique=True)
-    location = models.CharField('Standort', max_length=100, help_text='Staße bzw. ungefähren Standort angeben')
+    location = models.CharField('Standort', max_length=100,
+        help_text='Staße bzw. ungefähren Standort angeben')
     city = models.CharField('Stadt', max_length=100, help_text='Stadt oder Ortschaft angeben')
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
     eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
@@ -49,6 +62,21 @@ class MeasuringPoint(models.Model):
     category = models.IntegerField('Kategorie', choices=CATEGORIES, default=CATEGORY_CITY)
     image = ThumbnailerImageField('Bild', upload_to='measuring_stations', blank=True)
     position = GeopositionField()
+    so2 = models.BooleanField('SO2', default=False)
+    no = models.BooleanField('NO', default=False)
+    no2 = models.BooleanField('NO2', default=False)
+    o3 = models.BooleanField('O3', default=False)
+    ben = models.BooleanField('BEN', default=False)
+    pm10_teom = models.BooleanField('PM10TEOM', default=False)
+    pm10 = models.BooleanField('PM10', default=False)
+    pm25 = models.BooleanField('PM2.5', default=False)
+    ec = models.BooleanField('EC', default=False)
+    oc = models.BooleanField('OC', default=False)
+    sti = models.BooleanField('STI', default=False)
+    stns = models.BooleanField('STNS', default=False)
+    met = models.BooleanField('MET', default=False)
+    co = models.BooleanField('CO', default=False)
+    pm10_pb = models.BooleanField('PM10 Pb', default=False)
 
     class Meta:
         verbose_name = 'Messstelle'
@@ -64,13 +92,21 @@ class MeasuringPoint(models.Model):
     def get_csv(self, csvfile):
         writer = csv.writer(csvfile, lineterminator='\n')
         model = apps.get_model('measuring_stations', 'IndicatedValue')
-        writer.writerow(model.get_csv_header())
-        writer.writerows(self.indicated_values.values_list(*model.csv_fields)[:50])
+        csv_fields = ('date_created',) + self.get_active_values()
+        writer.writerow(model.get_verbose_names(csv_fields))
+        writer.writerows(self.indicated_values.values_list(*csv_fields)[:50])
         return csvfile
+
+    def get_active_values(self):
+        return tuple([field for field in self.value_fields if getattr(self, field)])
+
+    def active_names(self):
+        return ', '.join(self.get_verbose_names(self.get_active_values()))
+    active_names.short_description = 'Angezeigte Messwerte'
 
 
 @python_2_unicode_compatible
-class IndicatedValue(models.Model):
+class IndicatedValue(ValueFields):
     uuid = UUIDField(auto=True, primary_key=True)
     date_created = models.DateTimeField('Datum')
     measuring_point = models.ForeignKey(MeasuringPoint, related_name='indicated_values',
@@ -90,8 +126,6 @@ class IndicatedValue(models.Model):
     met = models.FloatField('MET', default=0)
     co = models.FloatField('CO', default=0)
     pm10_pb = models.FloatField('PM10 Pb', default=0)
-    csv_fields = ('date_created', 'so2', 'no', 'no2', 'o3', 'ben', 'pm10_teom', 'pm10', 'pm25',
-        'ec', 'oc', 'sti', 'stns', 'met', 'co', 'pm10_pb')
 
     class Meta:
         verbose_name = 'Messwert'
@@ -101,7 +135,3 @@ class IndicatedValue(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.date_created, self.measuring_point)
-
-    @classmethod
-    def get_csv_header(cls):
-        return tuple([cls._meta.get_field(field).verbose_name for field in cls.csv_fields])
