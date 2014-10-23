@@ -159,11 +159,12 @@ class Command(BaseCommand):
                 self.stderr.write(u'MeasuringPoint "{0}"" not found'.format(stationName))
                 return
             unit = self.inv_schadstoff[params[self.SCHADSTOFF_KEY]]
+            unit_key = unit.lower().replace('.', '')
             for row in reader:
                 dateRow = row.get('Datum Zeit', '')
                 if len(dateRow):
                     try:
-                        date = parser.parse(dateRow)
+                        date = parser.parse(dateRow, dayfirst=True)
                         if timezone.is_naive(date):
                             try:
                                 date = timezone.make_aware(date, self.tz)
@@ -172,14 +173,16 @@ class Command(BaseCommand):
                     except ValueError:
                         self.stderr.write('Failed to parse date "{0}"'.format(dateRow))
                         continue
-                    value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
+                    try:
+                        value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
+                    except KeyError:
+                        self.stderr.write(str(row))
                     if value.find(',') > -1:
                         value = float(value.replace(',', '.'))
                     is_float = isinstance(value, float)
                     if is_float or (value.find('g/m') == -1 and value.find('n. def.') == -1):
-                        unit = unit.lower().replace('.', '')
                         IndicatedValue.objects.update_or_create(date_created=date,
-                                    measuring_point=station, defaults={unit: float(value)})
+                                    measuring_point=station, defaults={unit_key: float(value)})
 
     @classmethod
     def invert_dict(cls, d):
