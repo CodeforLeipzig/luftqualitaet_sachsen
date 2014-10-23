@@ -149,7 +149,7 @@ class Command(BaseCommand):
         del params[self.TARGET_KEY]
 
         response, soup = self.post(params)
-        if response.status_code == 200:
+        if response and response.status_code == 200:
             reader = csv.DictReader(response.content.splitlines(), delimiter=';')
             stationName = self.inv_stations[params[self.STATION_KEY]]
             self.stdout.write(stationName)
