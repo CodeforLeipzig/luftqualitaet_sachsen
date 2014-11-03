@@ -121,7 +121,8 @@ class Common(Configuration):
         # Don't forget to use absolute paths, not relative paths.
         os.path.join(BaseDir.BASE_DIR, 'static'),
         os.path.join(BaseDir.BASE_DIR, 'bower_components', 'ekko-lightbox', 'dist'),
-        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'moment', 'min'),
+        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'c3'),
+        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'd3'),
     )
 
     STATICFILES_FINDERS = (

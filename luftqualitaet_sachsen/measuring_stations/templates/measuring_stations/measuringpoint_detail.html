@@ -7,6 +7,7 @@
 
 {% block css %}
     {{ block.super }}
+    <link href="{% static "c3.css" %}" rel="stylesheet" type="text/css">
     {% if measuringpoint.position.latitude %}
         {% leaflet_css %}
     {% endif %}
@@ -14,8 +15,8 @@
 
 {% block js_head %}
     {{ block.super }}
-    <script src="{% static "js/vendor/dygraphs-1.0.1.min.js" %}"></script>
-    <script src="{% static "moment.min.js" %}"></script>
+    <script src="{% static "d3.min.js" %}"></script>
+    <script src="{% static "c3.min.js" %}"></script>
 {% endblock js_head %}
 
 {% block js %}
@@ -50,19 +51,37 @@
         <small>{{ measuringpoint.get_category_display }}</small></h1>
     <div class="row">
         <div class="col-md-8">
-            <div id="graphdiv" style="width: 100%;"></div>
+            <div id="chart"></div>
             <script>
-                g = new Dygraph(
-                    document.getElementById('graphdiv'),
-                    '{% url "measuring_stations_measuringpoint_csv" slug=object.slug %}',
-                    {
-                        labelsDivStyles: { 'textAlign': 'right' },
-                        legend: 'always',
-                        showRangeSelector: true,
-                        title: 'Messwerte',
-                        xValueParser: function(x) { return 1000 * moment(x).format('X'); },
-                    }
-                );
+                var chart = c3.generate({
+                    bindto: '#chart',
+                    data: {
+                        url: '{% url "measuring_stations_measuringpoint_csv" slug=object.slug %}',
+                        x: 'Datum',
+                        xFormat: '%Y-%m-%d %H:%M:%S+00:00',
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%d.%m.%Y %H:%M',
+                                rotate: 10,
+                            },
+                        },
+                        y: {
+                            label: {
+                                text: 'µg/m³',
+                                position: 'outer-middle',
+                            },
+                        }
+                    },
+                    subchart: {
+                        show: true,
+                    },
+                    legend: {
+                        position: 'right',
+                    },
+                });
             </script>
         </div>
         <div class="col-md-4">

@@ -21,6 +21,6 @@
   ],
   "dependencies": {
     "ekko-lightbox": "~3.1.4",
-    "moment": "~2.8.3"
+    "c3": "~0.3.0"
   }
 }
