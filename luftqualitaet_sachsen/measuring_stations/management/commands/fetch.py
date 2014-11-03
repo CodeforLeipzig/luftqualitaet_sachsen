@@ -173,10 +173,9 @@ class Command(BaseCommand):
                     except ValueError:
                         self.stderr.write('Failed to parse date "{0}"'.format(dateRow))
                         continue
-                    try:
-                        value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
-                    except KeyError:
-                        self.stderr.write(str(row))
+
+                    value = row[(' ' + stationName + ' ' + unit).encode('iso-8859-1')].strip()
+
                     if value.find(',') > -1:
                         value = float(value.replace(',', '.'))
                     is_float = isinstance(value, float)
