@@ -38,6 +38,10 @@ class Dev(PostgreSQLDatabases, Common):
         'devserver.modules.profile.ProfileSummaryModule',
     )
 
+    DEBUG_TOOLBAR_CONFIG = {
+        'JQUERY_URL': '',
+    }
+
     # Beware before activating this! Grappelli has problems with admin
     # inlines and TEMPLATE_STRING_IF_INVALID.
     TEMPLATE_STRING_IF_INVALID = values.Value('')
