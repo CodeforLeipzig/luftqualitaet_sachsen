@@ -2,8 +2,9 @@
 .coverage
 bower_components
 docs/_build
+envs/*
+!envs/dev
 htmlcov
 media
 static_root
 *.pyc
-use
