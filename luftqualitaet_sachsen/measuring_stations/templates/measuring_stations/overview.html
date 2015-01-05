@@ -24,6 +24,7 @@
     {{ block.super }}
     <script type="text/javascript">
         var marker = [];
+        var popup_options = {keepInView: true};
 
         window.map_init_basic = function (map, options) {
             $.ajax("{% static 'bundeslaender_simplify200.geojson' %}").done(function(data) {
@@ -39,7 +40,7 @@
                     {% localize off %}
                         var popup = L.popup({minWidth: 400}).setContent("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}")
                         var marker = L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
-                            .addTo(map).bindPopup(popup, {});
+                            .addTo(map).bindPopup(popup, popup_options);
                         marker.on('click', (function(){
                             showGraph('{% url "measuring_stations_measuringpoint_csv" slug=marker.slug %}');
                         }));
