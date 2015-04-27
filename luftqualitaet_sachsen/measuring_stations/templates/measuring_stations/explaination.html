@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(function() {
+            var values = [
+                {
+                    'desc': 'SO&sup2',
+                    'title': 'Schwefeldioxid, SO2, ist das Anhydrid der Schwefligen Säure H2SO3. Schwefeldioxid ist ein farbloses, schleimhautreizendes, stechend riechendes und sauer schmeckendes, giftiges Gas. Es ist sehr gut (physikalisch) wasserlöslich und bildet mit Wasser in sehr geringem Maße Schweflige Säure. Es entsteht vor allem bei der Verbrennung von schwefelhaltigen fossilen Brennstoffen wie Kohle oder Erdölprodukten, die bis zu 4 Prozent Schwefel enthalten. Dadurch trägt es in erheblichem Maß zur Luftverschmutzung bei. Es ist der Grund für sauren Regen, wobei das Schwefeldioxid zunächst von Sauerstoff zu Schwefeltrioxid oxidiert wird und dann mit Wasser zu Schwefelsäure (H2SO4) umgesetzt wird. Um dies zu verhindern, gibt es verschiedene Verfahren zur Rauchgasentschwefelung. Zudem findet sich Schwefeldioxid im Umfeld von Hochtemperaturgebieten und aktiven Vulkanen.'
+                },
+                {
+                    'title': 'NO',
+                    'desc': 'Stickstoffmonoxid ist ein farbloses und giftiges Gas mit der Formel NO. Es ist eine chemische Verbindung aus den Elementen Stickstoff und Sauerstoff und gehört zur Gruppe der Stickoxide. NO ist ein Radikal.'
+                },
+                {
+                    'title': 'NO2',
+                    'desc': 'Stickstoffdioxid, NO2, ist ein rotbraunes, giftiges, stechend chlorähnlich riechendes Gas, das leicht unter Dimerisierung zu N2O4 (Distickstofftetraoxid) verflüssigt werden kann und als Spurengas in der Atmosphäre mit den höchsten Werten in Bodennähe vorkommt.'
+                }
+            ];
+
+            values.forEach(function (value, i) {
+                var control = 'collapse' + i;
+                var heading = 'heading' + i;
+                var elms = '<div class="panel-heading" role="tab" id="heading' + value.title + '">';
+
+
+                $('explainations').html(elms);
+            });
+        });
+    </script>
+<h1>Messwerte</h1>
+    <!--
+<ul>
+    <li><a href="#so2">SO&sup2</a></li>
+    <li><a href="#no">NO</a></li>
+    <li><a href="#no2">NO&sup2</a></li>
+    <li><a href="#o3">O&sup3</a></li>
+    <li><a href="#ben">BEN</a></li>
+    <li><a href="#pm10_teom">PM10_teom</a></li>
+    <li><a href="#pm10">PM10</a></li>
+    <li><a href="#pm25">PM25</a></li>
+    <li><a href="#ec">EC</a></li>
+    <li><a href="#oc">OC</a></li>
+    <li><a href="#sti">STI</a></li>
+    <li><a href="#stns">STNS</a></li>
+    <li><a href="#met">MET</a></li>
+    <li><a href="#co">CO</a></li>
+    <li><a href="#pm10_pb">PM10_pb</a></li>
+</ul>
+-->
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default" id="explainations">
+
+  </div>
+</div>
+{% endblock content %}
