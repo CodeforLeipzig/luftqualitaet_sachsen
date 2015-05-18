@@ -11,6 +11,8 @@ from geoposition.fields import GeopositionField
 from uuidfield import UUIDField
 from easy_thumbnails.fields import ThumbnailerImageField
 
+from . import managers
+
 
 class ValueFields(models.Model):
     value_fields = ('so2', 'no', 'no2', 'o3', 'ben', 'pm10_teom', 'pm10', 'pm25', 'ec', 'oc',
@@ -77,6 +79,8 @@ class MeasuringPoint(ValueFields):
     met = models.BooleanField('MET', default=False)
     co = models.BooleanField('CO', default=False)
     pm10_pb = models.BooleanField('PM10 Pb', default=False)
+
+    objects = managers.MeasuringPointManager()
 
     class Meta:
         verbose_name = 'Messstelle'
