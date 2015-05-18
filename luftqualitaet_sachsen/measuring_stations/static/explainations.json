@@ -1,14 +1,38 @@
 [
-    {
-        "title": "SO&sup2",
-        "desc": "Schwefeldioxid, SO2, ist das Anhydrid der Schwefligen Säure H2SO3. Schwefeldioxid ist ein farbloses, schleimhautreizendes, stechend riechendes und sauer schmeckendes, giftiges Gas. Es ist sehr gut (physikalisch) wasserlöslich und bildet mit Wasser in sehr geringem Maße Schweflige Säure. Es entsteht vor allem bei der Verbrennung von schwefelhaltigen fossilen Brennstoffen wie Kohle oder Erdölprodukten, die bis zu 4 Prozent Schwefel enthalten. Dadurch trägt es in erheblichem Maß zur Luftverschmutzung bei. Es ist der Grund für sauren Regen, wobei das Schwefeldioxid zunächst von Sauerstoff zu Schwefeltrioxid oxidiert wird und dann mit Wasser zu Schwefelsäure (H2SO4) umgesetzt wird. Um dies zu verhindern, gibt es verschiedene Verfahren zur Rauchgasentschwefelung. Zudem findet sich Schwefeldioxid im Umfeld von Hochtemperaturgebieten und aktiven Vulkanen."
-    },
-    {
-        "title": "NO",
-        "desc": "Stickstoffmonoxid ist ein farbloses und giftiges Gas mit der Formel NO. Es ist eine chemische Verbindung aus den Elementen Stickstoff und Sauerstoff und gehört zur Gruppe der Stickoxide. NO ist ein Radikal."
-    },
-    {
-        "title": "NO2",
-        "desc": "Stickstoffdioxid, NO2, ist ein rotbraunes, giftiges, stechend chlorähnlich riechendes Gas, das leicht unter Dimerisierung zu N2O4 (Distickstofftetraoxid) verflüssigt werden kann und als Spurengas in der Atmosphäre mit den höchsten Werten in Bodennähe vorkommt."
-    }
+  {
+      "title": "SO&sup2",
+      "desc": "Schwefeldioxid, SO2, ist das Anhydrid der Schwefligen Säure H2SO3. Schwefeldioxid ist ein farbloses, schleimhautreizendes, stechend riechendes und sauer schmeckendes, giftiges Gas. Es ist sehr gut (physikalisch) wasserlöslich und bildet mit Wasser in sehr geringem Maße Schweflige Säure. Es entsteht vor allem bei der Verbrennung von schwefelhaltigen fossilen Brennstoffen wie Kohle oder Erdölprodukten, die bis zu 4 Prozent Schwefel enthalten. Dadurch trägt es in erheblichem Maß zur Luftverschmutzung bei. Es ist der Grund für sauren Regen, wobei das Schwefeldioxid zunächst von Sauerstoff zu Schwefeltrioxid oxidiert wird und dann mit Wasser zu Schwefelsäure (H2SO4) umgesetzt wird. Um dies zu verhindern, gibt es verschiedene Verfahren zur Rauchgasentschwefelung. Zudem findet sich Schwefeldioxid im Umfeld von Hochtemperaturgebieten und aktiven Vulkanen."
+  },
+  {
+      "title": "NO",
+      "desc": "Stickstoffmonoxid ist ein farbloses und giftiges Gas mit der Formel NO. Es ist eine chemische Verbindung aus den Elementen Stickstoff und Sauerstoff und gehört zur Gruppe der Stickoxide. NO ist ein Radikal."
+  },
+  {
+      "title": "NO2",
+      "desc": "Stickstoffdioxid, NO2, ist ein rotbraunes, giftiges, stechend chlorähnlich riechendes Gas, das leicht unter Dimerisierung zu N2O4 (Distickstofftetraoxid) verflüssigt werden kann und als Spurengas in der Atmosphäre mit den höchsten Werten in Bodennähe vorkommt."
+  },
+  {
+      "title": "O&sup3",
+      "desc": "Ozon ist bei Zimmertemperatur und normalem Luftdruck gasförmig. Aufgrund seiner oxidierenden Wirkung reizt es bei Menschen und Tieren die Atemwege."
+  },
+  {
+      "title": "BEN",
+      "desc": "Benzol (auch Benzen) ist eine flüssige organische Verbindung mit einem charakteristischen aromatischen Geruch. Die Verbindung mit der Summenformel C6H6 ist ein aromatischer Kohlenwasserstoff und das einfachste und zugleich klassische Beispiel für die Aromatizität bestimmter Verbindungen."
+  },
+  {
+      "title": "PM 10",
+      "desc": "Feinstaub ist ein Teil des Schwebstaubs. Die Definition des Feinstaubs geht zurück auf den im Jahre 1987 eingeführten „National Air Quality“-Standard for Particulate Matter (kurz als PM-Standard bezeichnet) der US-amerikanischen Umweltschutzbehörde EPA (Environmental Protection Agency). PM10 ist beispielsweise eine Kategorie für Teilchen, deren aerodynamischer Durchmesser weniger als 10 Mikrometer (10 µm) beträgt."
+  },
+  {
+      "title": "PM 2,5",
+      "desc": "Feinstaub ist ein Teil des Schwebstaubs. Die Definition des Feinstaubs geht zurück auf den im Jahre 1987 eingeführten „National Air Quality“-Standard for Particulate Matter (kurz als PM-Standard bezeichnet) der US-amerikanischen Umweltschutzbehörde EPA (Environmental Protection Agency). PM 2,5 ist beispielsweise eine Kategorie für Teilchen, deren aerodynamischer Durchmesser weniger als 2,5 Mikrometer (2,5 µm) beträgt."
+  },
+  {
+      "title": "EC",
+      "desc": "Ruß besteht ebenfalls aus Kohlenstoff auf Graphitbasis. Je reiner der Ruß, desto deutlicher treten die Eigenschaften von Graphit hervor. Lampen- oder Kerzenruß ist stark mit organischen Verbindungen verunreinigt, die die Bildung größerer Graphit-Verbände verhindern."
+  },
+  {
+      "title": "OC",
+      "desc": "Die Kohlenwasserstoffe sind eine Stoffgruppe von chemischen Verbindungen, die nur aus Kohlenstoff und Wasserstoff bestehen[1] und Kohlenstoffketten, -ringe oder Kombinationen daraus bilden. Die Stoffgruppe ist vielfältig."
+  }
 ]
