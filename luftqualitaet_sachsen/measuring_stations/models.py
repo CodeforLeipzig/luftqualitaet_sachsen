@@ -89,6 +89,9 @@ class MeasuringPoint(ValueFields):
     def get_absolute_url(self):
         return reverse('measuring_stations_measuringpoint_detail', kwargs={'slug': self.slug})
 
+    def natural_key(self):
+        return (self.name,)
+
     def get_csv(self, csvfile):
         writer = csv.writer(csvfile, lineterminator='\n')
         model = apps.get_model('measuring_stations', 'IndicatedValue')
