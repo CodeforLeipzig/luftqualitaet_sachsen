@@ -10,6 +10,7 @@ from dateutil import parser
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from gevent.pool import Pool
+from optparse import make_option
 from pytz.exceptions import NonExistentTimeError
 from requests import exceptions
 
@@ -19,6 +20,14 @@ from ...models import IndicatedValue, MeasuringPoint
 class Command(BaseCommand):
     args = '<period {24H|48H|7D|1M|3M|6M|1Y}>'
     help = 'Fetches data for the given period from www.umwelt.sachsen.de'
+    option_list = BaseCommand.option_list + (
+        make_option('--debug',
+            action='store_true',
+            dest='debug',
+            default=False,
+            help='Activate debugging'),
+        )
+
     URL = "http://www.umwelt.sachsen.de/umwelt/infosysteme/luftonline/Recherche.aspx"
     STATION_ID = "ctl00_Inhalt_StationList"
     STATION_KEY = "ctl00$Inhalt$StationList"
@@ -79,7 +88,7 @@ class Command(BaseCommand):
         if len(args) < 1 or not(args[0] in self.ZEITRAUM.keys()):
             self.stdout.write("Usage: manage.py fetch {24H|48H|7D|1M|3M|6M|1Y}")
             sys.exit(0)
-
+        self.options = options
         gevent.monkey.patch_socket()
 
         params = {}
@@ -105,32 +114,36 @@ class Command(BaseCommand):
 
     def fetchStation(self, params, period):
         response, soup = self.post(params)
-        schadstoffe = soup.find(id=self.SCHADSTOFF_ID).find_all('option')
-        schadstoffList = []
-        for schadstoff in schadstoffe:
-            schadstoffList.append(schadstoff.text)
-        schadstoffPool = Pool(len(schadstoffList))
-        for schadstoff in schadstoffList:
-            tmp = dict(params)
-            tmp[self.SCHADSTOFF_KEY] = self.SCHADSTOFFE[schadstoff]
-            tmp[self.TARGET_KEY] = self.SCHADSTOFF_KEY
-            schadstoffPool.spawn(self.fetchSchadstoff, tmp, period)
-
-        schadstoffPool.join()
+        if soup:
+            schadstoffe = soup.find(id=self.SCHADSTOFF_ID).find_all('option')
+            schadstoffList = []
+            for schadstoff in schadstoffe:
+                schadstoffList.append(schadstoff.text)
+            schadstoffPool = Pool(len(schadstoffList))
+            for schadstoff in schadstoffList:
+                tmp = dict(params)
+                tmp[self.SCHADSTOFF_KEY] = self.SCHADSTOFFE[schadstoff]
+                tmp[self.TARGET_KEY] = self.SCHADSTOFF_KEY
+                schadstoffPool.spawn(self.fetchSchadstoff, tmp, period)
+            schadstoffPool.join()
 
     def post(self, params):
         response = soup = None
         params.update(self.params)
         try:
             response = self.s.post(self.URL, params)
+            response.raise_for_status()
             soup = BeautifulSoup(response.text)
             for key in (self.VALIDATION_KEY, self.VIEWSTATE_KEY):
                 try:
                     self.params[key] = soup.find(id=key)['value']
                 except TypeError:
                     pass
-        except exceptions.ConnectionError as e:
+        except (exceptions.ConnectionError, exceptions.HTTPError) as e:
             self.stderr.write(str(e))
+            if self.options['debug']:
+                self.stderr.write('{url}\n{body}'.format(url=response.request.url,
+                    body=response.request.body.replace('&', '\n')))
         return response, soup
 
     def fetchSchadstoff(self, params, period):
