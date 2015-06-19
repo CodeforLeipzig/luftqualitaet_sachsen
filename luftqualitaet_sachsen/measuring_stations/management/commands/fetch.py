@@ -26,6 +26,12 @@ class Command(BaseCommand):
             dest='debug',
             default=False,
             help='Activate debugging'),
+        make_option('--timeout',
+            action='store',
+            type=float,
+            dest='timeout',
+            default=1,
+            help='Connection timeout in seconds, default is 1'),
         )
 
     URL = "http://www.umwelt.sachsen.de/umwelt/infosysteme/luftonline/Recherche.aspx"
@@ -131,7 +137,7 @@ class Command(BaseCommand):
         response = soup = None
         params.update(self.params)
         try:
-            response = self.s.post(self.URL, params)
+            response = self.s.post(self.URL, params, timeout=self.options['timeout'])
             response.raise_for_status()
             soup = BeautifulSoup(response.text)
             for key in (self.VALIDATION_KEY, self.VIEWSTATE_KEY):
