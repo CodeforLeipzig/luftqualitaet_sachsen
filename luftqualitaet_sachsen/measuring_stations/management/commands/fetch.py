@@ -106,7 +106,8 @@ class Command(BaseCommand):
             self.STATIONEN[station.string] = station['value']
         params[self.TARGET_KEY] = self.STATION_KEY
 
-        stationPool = Pool(len(self.STATIONEN))
+        #stationPool = Pool(len(self.STATIONEN))
+        stationPool = Pool(1)
         self.inv_stations = self.invert_dict(self.STATIONEN)
         self.inv_schadstoff = self.invert_dict(self.SCHADSTOFFE)
         # self.inv_schadstoff['109;2'] = 'PM2.5' # csv uses PM2.5
@@ -125,7 +126,8 @@ class Command(BaseCommand):
             schadstoffList = []
             for schadstoff in schadstoffe:
                 schadstoffList.append(schadstoff.text)
-            schadstoffPool = Pool(len(schadstoffList))
+            #schadstoffPool = Pool(len(schadstoffList))
+            schadstoffPool = Pool(1)
             for schadstoff in schadstoffList:
                 tmp = dict(params)
                 tmp[self.SCHADSTOFF_KEY] = self.SCHADSTOFFE[schadstoff]
