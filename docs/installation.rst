@@ -25,11 +25,13 @@ Development Setup (manual way)
 =================
 It's recommened to install virtualenv, it helps to separate the build artefacts from the rest of your system. On Debian based Linux distributions, it may look like this::
     
-    $ apt-get update && eval apt-get install -y --force-yes --no-install-recommends python-virtualenv virtualenvwrapper
+    $ apt-get update && apt-get install -y --force-yes --no-install-recommends python-virtualenv virtualenvwrapper
     
 Create the the virtualenv and enter it::
 
     $ mkvirtualenv luftverschmutzung_sachsen
+    
+To exit the environment you enter **deactivate** and to re-enter it **workon luftverschmutzung_sachsen**
 
 Install the packages for development::
 
