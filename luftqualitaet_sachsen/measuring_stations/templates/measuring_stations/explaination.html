@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static "js/explaination.js" %}"></script>
+    <script type="text/javascript">
+        window.explainationsJsonUrl = "{% static 'explainations.json' %}";
+    </script>
+{% endblock js %}
+{% block content %}
+
+<h1>Messwerte</h1>
+
+<div class="panel-group" id="explain-list" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default hidden" id="template">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+            </h3>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                Panel content
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
