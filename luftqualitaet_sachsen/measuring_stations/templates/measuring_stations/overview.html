@@ -30,7 +30,14 @@
             $.ajax("{% static 'bundeslaender_simplify200.geojson' %}").done(function(data) {
                 L.geoJson(JSON.parse(data), {
                     style: function (feature) {
-                        return {color: feature.properties.color};
+                        return {
+                            fillColor:'#DFE2F7',
+                            color:'#6E80F5',
+                            opacity: 0.5,
+                            fill: true,
+                            fillOpacity: 0.4,
+                            weight: 1
+                        };
                     }
                 }).addTo(map);
             });
