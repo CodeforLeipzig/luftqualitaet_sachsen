@@ -37,11 +37,9 @@ help:
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
-	bower install
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
-	bower install
 
 install-test:
 	pip install -U --no-deps -r requirements/test.txt
