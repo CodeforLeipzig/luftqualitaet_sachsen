@@ -14,6 +14,8 @@ When it's finished you may enter the machine and the Python environment with the
     $ vagrant ssh
     
     $ workon luftverschmutzung_sachsen
+    
+    $ cd /vagrant
 
 All the upstream code is persistenly mounted to /vagrant    
 
