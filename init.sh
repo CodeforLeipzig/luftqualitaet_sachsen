@@ -20,9 +20,9 @@ USER="vagrant"
 VIRTUALENV="/home/$USER/.virtualenvs"  
 
 sudo -i -u $USER env VIRTUALENV="$VIRTUALENV" HOME="/home/$USER" bash <<'EOF'
-  mkdir -p $VIRTUALENV; export WORKON_HOME=$VIRTUALENV; echo $VIRTUALENV >> $HOME/.bashrc
+  mkdir -p $VIRTUALENV; export WORKON_HOME=$VIRTUALENV; echo WORKON_HOME=$VIRTUALENV >> $HOME/.bashrc
   source /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv luftverschmutzung_sachsen
-  cd /vagrant; make install
+  cd /vagrant; make install-dev
 EOF
 
 
