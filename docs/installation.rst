@@ -43,7 +43,8 @@ There might be a stumbling block regarding the auth configuration in PostgreSQL.
 You need a user/pass auth regime aka md5 .
 
 An example configuration in **/etc/postgersql/<version>/main/pg_hba.conf** might be:
-local   all             all                                     md5
+    
+    `local   all             all                                     md5`
 
 
 Then create the new PostgreSQL user and database, depends heavily on your PostgreSQL installation!::
