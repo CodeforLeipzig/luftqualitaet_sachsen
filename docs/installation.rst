@@ -19,7 +19,9 @@ When it's finished you may enter the machine and the Python environment with the
 
 All the upstream code is persistenly mounted to /vagrant    
 
-**Hint**: Until now the vagrant file only finishes the **create-db** target, as there is a problem with the migrate target as of yet
+To start the Django http server, just run::
+    
+    $ make runserver-vagrant
 
 Manual way 
 =================
@@ -36,16 +38,17 @@ To exit the environment you enter **deactivate** and to re-enter it **workon luf
 Install the packages for development::
 
     $ make install-dev
-    
 
-The interactive part
-====================
+There might be a stumbling block regarding the auth configuration in PostgreSQL. In my experiments with Ubuntu 14.04 LTS I found out the "peers" setting to be default for local access of "all users", except this doesn't work with this Django App. 
+You need a user/pass auth regime aka md5 .
 
-As of now you have a system with all prerequisties running, whether this is a vagrant instance or a custom system shouldn't matter. In the case of vagrant you need to enter all the following commands within the vagrant instance. (e.g. to enter it **vagrant ssh** )
+An example configuration in **/etc/postgersql/<version>/main/pg_hba.conf** might be:
+local   all             all                                     md5
 
-Then create the new PostgreSQL user and database::
 
-    $ make create-db
+Then create the new PostgreSQL user and database, depends heavily on your PostgreSQL installation!::
+
+    $ (sudo -u postgres) make create-db
 
 Now create the database tables::
 

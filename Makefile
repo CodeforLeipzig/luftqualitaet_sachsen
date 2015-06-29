@@ -1,4 +1,5 @@
 PROJECT = luftqualitaet_sachsen
+HOST ?= 127.0.0.1
 PORT ?= 8000
 ENV ?= dev
 PERIOD ?= 24H
@@ -28,6 +29,7 @@ help:
 	@echo "  coverage-html      to generate and open a HTML coverage report"
 	@echo "  migrate            to synchronize Django's database state with the current set of models and migrations"
 	@echo "  runserver          to start Django's development Web server"
+	@echo "  runserver-vagrant  to start Django's development Web server in vagrant"
 	@echo "  shell              to start a Python interactive interpreter"
 	@echo "  docs               to build and open the project documentation as HTML"
 	@echo "  clean              to remove all artifacts"
@@ -48,7 +50,7 @@ install-osx:
 	pip install -U --no-deps -r requirements/osx.txt
 
 create-db:
-	psql -c "CREATE USER luftqualitaet_sachsen WITH PASSWORD 'db';"
+	psql -c "CREATE USER luftqualitaet_sachsen WITH PASSWORD 'luftqualitaet_sachsen';"
 	psql -c "CREATE DATABASE luftqualitaet_sachsen OWNER luftqualitaet_sachsen;"
 info:
 	@echo "Testing on $(WHERE)"
@@ -73,7 +75,10 @@ migrate:
 	envdir envs/$(ENV) $(PROJECT)/manage.py migrate
 
 runserver:
-	envdir envs/$(ENV) $(PROJECT)/manage.py runserver $(PORT)
+	envdir envs/$(ENV) $(PROJECT)/manage.py runserver $(HOST):$(PORT)
+runserver-vagrant:
+	envdir envs/$(ENV) $(PROJECT)/manage.py runserver 0.0.0.0:$(PORT)
+
 
 shell:
 	envdir envs/$(ENV) $(PROJECT)/manage.py shell
