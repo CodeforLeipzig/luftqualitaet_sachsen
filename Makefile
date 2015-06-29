@@ -48,9 +48,8 @@ install-osx:
 	pip install -U --no-deps -r requirements/osx.txt
 
 create-db:
-	createuser -d -e -P luftqualitaet_sachsen
-	createdb -h localhost -U luftqualitaet_sachsen luftqualitaet_sachsen
-
+	psql -c "CREATE USER luftqualitaet_sachsen WITH PASSWORD 'db';"
+	psql -c "CREATE DATABASE luftqualitaet_sachsen OWNER luftqualitaet_sachsen;"
 info:
 	@echo "Testing on $(WHERE)"
 
