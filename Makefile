@@ -49,7 +49,7 @@ install-osx:
 
 create-db:
 	createuser -d -e -P luftqualitaet_sachsen
-	createdb -U luftqualitaet_sachsen luftqualitaet_sachsen
+	createdb -h localhost -U luftqualitaet_sachsen luftqualitaet_sachsen
 
 info:
 	@echo "Testing on $(WHERE)"
