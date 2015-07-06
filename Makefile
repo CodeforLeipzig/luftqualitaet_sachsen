@@ -39,6 +39,7 @@ help:
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
+	bower install
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
@@ -76,9 +77,6 @@ migrate:
 
 runserver:
 	envdir envs/$(ENV) $(PROJECT)/manage.py runserver $(HOST):$(PORT)
-runserver-vagrant:
-	envdir envs/$(ENV) $(PROJECT)/manage.py runserver 0.0.0.0:$(PORT)
-
 
 shell:
 	envdir envs/$(ENV) $(PROJECT)/manage.py shell
