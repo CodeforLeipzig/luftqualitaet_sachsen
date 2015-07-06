@@ -5,9 +5,9 @@ Installation
 NEW alternative setup with Vagrant
 ================================
 
-Just clone the repo and start the virtual machine with the help of vagrant::
+Just clone the repo and start the virtual machine with the help of `vagrant <https://vagrantup.com>`_ ::
     
-    $ vagrant up --provider=virtualbox
+    $ vagrant up
 
 When it's finished you may enter the machine and the Python environment with the following commands::
     

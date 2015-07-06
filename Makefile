@@ -29,7 +29,6 @@ help:
 	@echo "  coverage-html      to generate and open a HTML coverage report"
 	@echo "  migrate            to synchronize Django's database state with the current set of models and migrations"
 	@echo "  runserver          to start Django's development Web server"
-	@echo "  runserver-vagrant  to start Django's development Web server in vagrant"
 	@echo "  shell              to start a Python interactive interpreter"
 	@echo "  docs               to build and open the project documentation as HTML"
 	@echo "  clean              to remove all artifacts"
