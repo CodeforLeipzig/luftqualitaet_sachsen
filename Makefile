@@ -1,4 +1,5 @@
 PROJECT = luftqualitaet_sachsen
+HOST ?= 127.0.0.1
 PORT ?= 8000
 ENV ?= dev
 PERIOD ?= 24H
@@ -41,7 +42,6 @@ install:
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
-	bower install
 
 install-test:
 	pip install -U --no-deps -r requirements/test.txt
@@ -50,9 +50,8 @@ install-osx:
 	pip install -U --no-deps -r requirements/osx.txt
 
 create-db:
-	createuser -d -e -P luftqualitaet_sachsen
-	createdb -U luftqualitaet_sachsen luftqualitaet_sachsen
-
+	psql -c "CREATE USER luftqualitaet_sachsen WITH PASSWORD 'luftqualitaet_sachsen';"
+	psql -c "CREATE DATABASE luftqualitaet_sachsen OWNER luftqualitaet_sachsen;"
 info:
 	@echo "Testing on $(WHERE)"
 
@@ -76,7 +75,7 @@ migrate:
 	envdir envs/$(ENV) $(PROJECT)/manage.py migrate
 
 runserver:
-	envdir envs/$(ENV) $(PROJECT)/manage.py runserver $(PORT)
+	envdir envs/$(ENV) $(PROJECT)/manage.py runserver $(HOST):$(PORT)
 
 shell:
 	envdir envs/$(ENV) $(PROJECT)/manage.py shell
