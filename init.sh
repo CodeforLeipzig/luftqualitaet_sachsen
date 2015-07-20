@@ -8,7 +8,7 @@
 
 # ---- install system packages ----
 
-PACKAGES="npm nodejs-legacy postgresql-client postgresql python-pip python-dev python-virtualenv virtualenvwrapper libpq-dev git"
+PACKAGES="cython daemontools npm nodejs-legacy postgresql-client postgresql python-pip python-dev python-virtualenv virtualenvwrapper libpq-dev git"
 
 [ -n "$PACKAGES" ] && apt-get update && eval apt-get install -y --force-yes --no-install-recommends "$PACKAGES"
 
