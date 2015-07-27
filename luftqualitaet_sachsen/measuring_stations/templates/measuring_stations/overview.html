@@ -45,11 +45,11 @@
             {% for marker in measuring_points %}
                 {% if marker.position.latitude %}
                     {% localize off %}
-                        var popup = L.popup({minWidth: 400}).setContent("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}")
+                        var popup = L.popup({minWidth: 500}).setContent("{% spaceless %}{% include 'measuring_stations/_marker.html' %}{% endspaceless %}")
                         var marker = L.marker([{{ marker.position.latitude }}, {{ marker.position.longitude }}])
                             .addTo(map).bindPopup(popup, popup_options);
                         marker.on('click', (function(){
-                            showGraph('{% url "measuring_stations_measuringpoint_csv" slug=marker.slug %}');
+                            showGraph('{% url "measuring_stations_measuringpoint_csv" slug=marker.slug %}?limit=1&flat=1');
                         }));
 
                     {% endlocalize %}
@@ -57,43 +57,41 @@
             {% endfor %}
         }
 
+        var colors = d3.scale.category20().range();
         var showGraph = function(url) {
             chart = c3.generate({
                 bindto: '#chart',
                 data: {
                     url: url,
-                    x: 'Datum',
-                    xFormat: '%Y-%m-%d %H:%M:%S+00:00',
-                    labels: false,
+                    x: 'x',
+                    type: 'bar',
+                    color: function (color, d) {
+                        return colors[d.index];
+                    },
+                    labels: true
                 },
                 axis: {
+                    rotated: true,
                     x: {
-                        type: 'timeseries',
-                        tick: {
-                            format: '%d.%m.%Y %H:%M',
-                            culling: {
-                                max: 3,
-                            },
-                        },
+                        type: 'category'
                     },
                     y: {
                         label: {
                             text: 'µg/m³',
-                            position: 'outer-middle',
-                        },
-                        ticks:  5,
-                    },
+                            position: 'outer-center'
+                        }
+                    }
                 },
                 tooltip: {
-                    show: false,
+                    show: false
                 },
                 size: {
-                    height: 150,
-                    width: 400,
+                    height: 200,
+                    width: 300
                 },
                 legend: {
-                    show: false,
-                },
+                    show: false
+                }
             });
         };
     </script>

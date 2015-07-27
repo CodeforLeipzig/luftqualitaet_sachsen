@@ -96,19 +96,26 @@ class MeasuringPoint(ValueFields):
     def natural_key(self):
         return (self.name,)
 
-    def get_csv(self, csvfile):
+    def get_csv(self, csvfile, limit, flat=False):
         writer = csv.writer(csvfile, lineterminator='\n')
         model = apps.get_model('measuring_stations', 'IndicatedValue')
-        csv_fields = ('date_created',) + self.get_active_values()
-        writer.writerow(model.get_verbose_names(csv_fields))
-        writer.writerows(self.indicated_values.values_list(*csv_fields)[:50])
+        if flat:
+            writer.writerow(("x", ""))
+            names = model.get_verbose_names(self.active_values)
+            values = self.indicated_values.values_list(*self.active_values)[:limit][0]
+            writer.writerows(zip(names, values))
+        else:
+            csv_fields = ('date_created',) + self.active_values
+            writer.writerow(model.get_verbose_names(csv_fields))
+            writer.writerows(self.indicated_values.values_list(*csv_fields)[:limit])
         return csvfile
 
-    def get_active_values(self):
+    @property
+    def active_values(self):
         return tuple([field for field in self.value_fields if getattr(self, field)])
 
     def active_names(self):
-        return ', '.join(self.get_verbose_names(self.get_active_values()))
+        return ', '.join(self.get_verbose_names(self.active_values))
     active_names.short_description = 'Angezeigte Messwerte'
 
 
