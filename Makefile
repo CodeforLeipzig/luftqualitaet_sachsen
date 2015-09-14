@@ -34,7 +34,8 @@ help:
 	@echo "  clean              to remove all artifacts"
 	@echo "  clean-coverage     to remove coverage artifacts"
 	@echo "  clean-pyc          to remove Python file artifacts"
-	@echo "  fetch              to fetch live data"
+	@echo "  fetch              to fetch pollution data"
+	@echo "  fetch-stations     to fetch station data"
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
@@ -101,3 +102,6 @@ clean-release:
 
 fetch:
 	envdir envs/$(ENV) $(PROJECT)/manage.py fetch $(PERIOD)
+
+fetch-stations:
+	envdir envs/$(ENV) $(PROJECT)/manage.py fetchStations

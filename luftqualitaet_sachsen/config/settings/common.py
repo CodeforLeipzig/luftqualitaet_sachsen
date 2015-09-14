@@ -184,8 +184,8 @@ class Common(Configuration):
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
     LEAFLET_CONFIG = {
-        'DEFAULT_CENTER': (50.9280361, 13.456666),
-        'DEFAULT_ZOOM': 8,
+        'DEFAULT_CENTER': (51.5167, 9.9167),
+        'DEFAULT_ZOOM': 6,
         'MIN_ZOOM': 3,
         'MAX_ZOOM': 18,
         'RESET_VIEW': False,
