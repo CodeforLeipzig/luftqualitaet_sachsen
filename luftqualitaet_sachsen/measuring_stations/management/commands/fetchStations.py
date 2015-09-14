@@ -53,7 +53,6 @@ class Command(BaseCommand):
         for row in reader:
             address = geolocator.reverse((row['lat'], row['lon'])).raw['address']
 
-            print address
             name = self.getStationName(row)
             position = self.getPosition(row)
             location = self.getLocationName(address)
