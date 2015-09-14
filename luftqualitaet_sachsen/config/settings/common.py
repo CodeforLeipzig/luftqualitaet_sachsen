@@ -163,6 +163,7 @@ class Common(Configuration):
         'grappelli',  # grappelli must be listed before django.contrib.admin!
         'django.contrib.admin',
         'django.contrib.admindocs',
+        'rest_framework',
         'crispy_forms',
         'measuring_stations',
         'easy_thumbnails',

@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.views.generic import DetailView
 from django.shortcuts import render
 from geopy import distance
+from rest_framework import viewsets
 
 from .models import MeasuringPoint
+from. import serializers
 
 
 def overview(request):
@@ -32,5 +34,11 @@ class MeasuringPointCSVView(DetailView):
     def render_to_response(self, context, **response_kwargs):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="%s.csv"' % self.object.slug
+
         return self.object.get_csv(response, self.request.GET.get('limit', 50),
             bool(int(self.request.GET.get('flat', 0))))
+
+
+class Overview(viewsets.ModelViewSet):
+    queryset = MeasuringPoint.objects.all()
+    serializer_class = serializers.MeasuringPointSerializer
