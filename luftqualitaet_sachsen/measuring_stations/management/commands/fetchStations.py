@@ -12,6 +12,7 @@ from srtm import get_data
 from geoposition.fields import Geoposition
 from geopy.geocoders import Nominatim
 from decimal import Decimal
+from progressbar import ProgressBar, Percentage, Bar
 
 from ...models import MeasuringPoint
 
@@ -47,8 +48,11 @@ class Command(BaseCommand):
         response = self.s.post(self.URL, params, timeout=self.options['timeout'])
         response.raise_for_status()
 
-        reader = csv.DictReader(response.content.splitlines(), delimiter='\t')
+        lines = response.content.splitlines()
+        reader = csv.DictReader(lines, delimiter='\t')
         geolocator = Nominatim()
+        pbar = ProgressBar(widgets=[Percentage(), Bar()], maxval=len(lines)).start()
+        i = 0
 
         for row in reader:
             address = geolocator.reverse((row['lat'], row['lon'])).raw['address']
@@ -73,6 +77,10 @@ class Command(BaseCommand):
                     'slug': slug
                 }
                 )
+            pbar.update(i)
+            i = i + 1
+
+        pbar.finish()
 
     def getPosition(self, row):
         return Geoposition(Decimal(row['lat']), Decimal(Decimal(row['lon'])))
