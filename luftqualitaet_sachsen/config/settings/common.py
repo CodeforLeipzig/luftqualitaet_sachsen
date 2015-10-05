@@ -201,6 +201,14 @@ class Common(Configuration):
 
     THUMBNAIL_SUBDIR = 'thumbs'
 
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+            #'rest_framework_csv.renderers.CSVRenderer',
+        )
+    }
+
 
 class Public(Email, Common):
     """Settings for public projects."""
