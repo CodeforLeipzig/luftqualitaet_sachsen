@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from django.shortcuts import render
 from geopy import distance
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from .models import MeasuringPoint
 from. import serializers
@@ -39,6 +40,16 @@ class MeasuringPointCSVView(DetailView):
             bool(int(self.request.GET.get('flat', 0))))
 
 
-class Overview(viewsets.ModelViewSet):
+class MeasuringPointView(viewsets.ReadOnlyModelViewSet):
     queryset = MeasuringPoint.objects.all()
-    serializer_class = serializers.MeasuringPointSerializer
+
+    def list(self, request):
+        qs = self.get_queryset()
+        serializer = serializers.MiniMeasuringPointSerializer(
+            qs, context={'request': request}, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        qs = self.get_queryset().filter(pk=pk).prefetch_related('indicated_values').last()
+        serializer = serializers.MeasuringPointSerializer(qs, context={'request': request})
+        return Response(serializer.data)

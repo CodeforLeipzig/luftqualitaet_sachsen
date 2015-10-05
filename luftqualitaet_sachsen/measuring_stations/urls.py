@@ -7,7 +7,7 @@ from measuring_stations import views
 
 
 router = routers.DefaultRouter()
-router.register(r'measuringpoint_overview', views.Overview)
+router.register(r'measuringpoint_overview', views.MeasuringPointView)
 
 
 urlpatterns = [
