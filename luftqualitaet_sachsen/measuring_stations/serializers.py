@@ -19,6 +19,7 @@ class MeasuringPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.MeasuringPoint
 
-    def get_indicated_values(self, obj):
+    @staticmethod
+    def get_indicated_values(obj):
         serializer = IndicatedValueSerializer(obj.indicated_values.all()[:50], many=True)
         return serializer.data
