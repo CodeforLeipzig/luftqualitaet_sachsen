@@ -6,6 +6,7 @@ import gevent.monkey
 import requests
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.db.models import Q
 from optparse import make_option
 from HTMLParser import HTMLParser
 
@@ -99,21 +100,14 @@ class Command(BaseCommand):
             defaults['slug'] = self.getSlug(row)
 
             with transaction.atomic():
-                entry = MeasuringPoint.objects.select_for_update().filter(name=defaults['name']).last()
+                entry = MeasuringPoint.objects.get(Q(name=defaults['name']) | Q(slug=defaults['slug']))
 
                 if (entry == None):
-                    entries = MeasuringPoint.objects.select_for_update().filter(slug=defaults['slug']).last()
-
-                    if (entry == None):
-                        address = geolocator.reverse((row['lat'], row['lon'])).raw['address']
-                        defaults['location'] = self.getLocationName(address)
-                        defaults['city'] = self.getCityName(address)
-                        defaults[self.POLLUTANTS_FIELD_MAP[pollutant]] = True
-                        MeasuringPoint.objects.create(**defaults)
-                    else:
-                        entry[self.POLLUTANTS_FIELD_MAP[pollutant]] = True
-                        entry.save()
-
+                    address = geolocator.reverse((row['lat'], row['lon'])).raw['address']
+                    defaults['location'] = self.getLocationName(address)
+                    defaults['city'] = self.getCityName(address)
+                    defaults[self.POLLUTANTS_FIELD_MAP[pollutant]] = True
+                    MeasuringPoint.objects.create(**defaults)
                 else:
                     setattr(entry, self.POLLUTANTS_FIELD_MAP[pollutant], True)
                     entry.save()
