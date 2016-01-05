@@ -123,6 +123,7 @@ class Common(Configuration):
         os.path.join(BaseDir.BASE_DIR, 'bower_components', 'ekko-lightbox', 'dist'),
         os.path.join(BaseDir.BASE_DIR, 'bower_components', 'c3'),
         os.path.join(BaseDir.BASE_DIR, 'bower_components', 'd3'),
+        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'mapbox.js'),
     )
 
     STATICFILES_FINDERS = (

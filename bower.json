@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "ekko-lightbox": "~3.3.0",
-    "c3": "~0.4.10"
+    "c3": "~0.4.10",
+    "mapbox.js": "~v2.2.2 "
   }
 }
