@@ -34,7 +34,8 @@ help:
 	@echo "  clean              to remove all artifacts"
 	@echo "  clean-coverage     to remove coverage artifacts"
 	@echo "  clean-pyc          to remove Python file artifacts"
-	@echo "  fetch              to fetch pollution data"
+	@echo "  fetch              to fetch pollution data from saxony"
+	@echo "  fetch-data         to fetch pollution data from germany"
 	@echo "  fetch-stations     to fetch station data"
 
 install:
@@ -105,3 +106,6 @@ fetch:
 
 fetch-stations:
 	envdir envs/$(ENV) $(PROJECT)/manage.py fetchStations
+
+fetch-data:
+	envdir envs/$(ENV) $(PROJECT)/manage.py fetchData $(PERIOD)
