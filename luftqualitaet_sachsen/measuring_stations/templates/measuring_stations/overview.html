@@ -102,7 +102,7 @@
 
 {% block content %}
     <div class="content">
-        <p>Das Projekt <strong>Luftqualität Sachsen</strong> stellt die Messwerte des <a href="http://www.smul.sachsen.de/lfulg/">Sächsischen Landesamtes für Umwelt, Landwirtschaft und Geologie</a> übersichtlich dar. Es ist im Rahmen der Arbeit im <a href="http://codefor.de/leipzig/">OK Lab Leipzig</a> entstanden.</p>
+        <p>Das Projekt <strong>Luftqualität Deutschland</strong> stellt die Messwerte des <a href="http://www.umweltbundesamt.de/">Umweltbundesamtes</a> übersichtlich dar. Es ist im Rahmen der Arbeit im <a href="http://codefor.de/leipzig/">OK Lab Leipzig</a> entstanden.</p>
         {% leaflet_map "start_map" callback="window.map_init_basic" %}
         <div class="container">
             {% for marker in measuring_points %}

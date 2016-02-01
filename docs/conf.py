@@ -45,8 +45,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Luftqualität Sachsen'
-copyright = u'2014 - 2015, OK Lab Leipzig'
+project = u'Luftqualität Deutschland'
+copyright = u'2014 - 2016, OK Lab Leipzig'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -198,7 +198,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'luftqualitaet_sachsen.tex', u'Luftqualität Sachsen Documentation',
+  ('index', 'luftqualitaet_sachsen.tex', u'Luftqualität Deutschland Documentation',
    u'OK Lab Leipzig', 'manual'),
 ]
 
@@ -228,7 +228,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'luftqualitaet_sachsen', u'Luftqualität Sachsen Documentation',
+    ('index', 'luftqualitaet_sachsen', u'Luftqualität Deutschland Documentation',
      [u'OK Lab Leipzig'], 1)
 ]
 
@@ -242,8 +242,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'luftqualitaet_sachsen', u'Luftqualität Sachsen Documentation',
-   u'OK Lab Leipzig', 'Luftqualität Sachsen', 'Eine übersichtliche Darstellung der Messwerte aller sächsischen Messstationen zur Luftqualität. Zu jeder Messstation werden die Daten detailliert als Tabelle und Diagramm dargestellt.',
+  ('index', 'luftqualitaet_sachsen', u'Luftqualität Deutschland Documentation',
+   u'OK Lab Leipzig', 'Luftqualität Deutschland', 'Eine übersichtliche Darstellung der Messwerte aller deutschen Messstationen zur Luftqualität. Zu jeder Messstation werden die Daten detailliert als Tabelle und Diagramm dargestellt.',
    'Miscellaneous'),
 ]
 

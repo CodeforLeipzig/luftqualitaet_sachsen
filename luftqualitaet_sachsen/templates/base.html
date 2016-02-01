@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Luftqualität Sachsen - {% block title %}{% endblock %}</title>
+        <title>Luftqualität Deutschland - {% block title %}{% endblock %}</title>
         <meta name="description" content="Eine übersichtliche Darstellung der Messwerte aller sächsischen Messstationen zur Luftqualität. Zu jeder Messstation werden die Daten detailliert als Tabelle und Diagramm dargestellt.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block css %}
@@ -35,7 +35,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{% url "measuring_stations_measuringpoint_overview" %}">Luftqualität Sachsen</a>
+          <a class="navbar-brand" href="{% url "measuring_stations_measuringpoint_overview" %}">Luftqualität Deutschland</a>
         </div>
       </div>
     </div>
@@ -47,8 +47,8 @@
 
       <footer>
         <p>
-            &copy; Luftqualität Sachsen 2014 - 2015<br>
-            Darstellung auf der Grundlage von Daten und mit Erlaubnis des <a href="http://www.smul.sachsen.de/lfulg/">Sächsischen Landesamtes für Umwelt, Landwirtschaft und Geologie</a>
+            &copy; Luftqualität Deutschland 2014 - 2016<br>
+            Darstellung auf der Grundlage von Daten und mit Erlaubnis des <a href="http://www.umweltbundesamt.de/">Umweltbundesamtes</a>
         </p>
           <a href="{% url 'impressum' %}">Impressum</a>
       </footer>
@@ -71,6 +71,6 @@
         </script>
         {% endcomment %}
         {% endblock js %}
-        <!-- Luftqualität Sachsen 1.0.0 powered by Django  -->
+        <!-- Luftqualität Deutschland 1.0.0 powered by Django  -->
     </body>
 </html>

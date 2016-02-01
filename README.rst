@@ -1,8 +1,8 @@
 *******************************
-Luftqualität Sachsen
+Luftqualität Deutschland
 *******************************
 
-Eine übersichtliche Darstellung der Messwerte aller sächsischen
+Eine übersichtliche Darstellung der Messwerte aller deutschen
 Messstationen zur Luftqualität. Zu jeder Messstation werden die Daten
 detailliert als Tabelle und Diagramm dargestellt.
 

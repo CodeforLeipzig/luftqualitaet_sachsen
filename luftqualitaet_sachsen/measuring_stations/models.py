@@ -10,6 +10,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from geoposition.fields import GeopositionField
 from uuidfield import UUIDField
 from easy_thumbnails.fields import ThumbnailerImageField
+from pytz.exceptions import NonExistentTimeError
+from django.utils import timezone
+from dateutil import parser
 
 from . import managers
 
@@ -56,7 +59,7 @@ class MeasuringPoint(ValueFields):
     slug = models.SlugField(unique=True)
     form_id = models.IntegerField('Formular ID', unique=True)
     location = models.CharField('Standort', max_length=100,
-        help_text='Staße bzw. ungefähren Standort angeben')
+        help_text='Straße bzw. ungefähren Standort angeben')
     city = models.CharField('Stadt', max_length=100, help_text='Stadt oder Ortschaft angeben')
     amsl = models.IntegerField('Höhe über NN [m]', blank=True, null=True)
     eu_typing = models.IntegerField('Typisierung nach EU-Richtlinie', choices=EU_TYPING_CHOICES,
@@ -109,6 +112,38 @@ class MeasuringPoint(ValueFields):
             writer.writerow(model.get_verbose_names(csv_fields))
             writer.writerows(self.indicated_values.values_list(*csv_fields)[:limit])
         return csvfile
+
+    def put_csv(self, content, unit, form_id, station_name):
+        reader = csv.DictReader(content, delimiter=b';')
+        print station_name
+        try:
+            station = MeasuringPoint.objects.get(form_id=form_id)
+        except MeasuringPoint.DoesNotExist:
+            self.stderr.write(u'MeasuringPoint "{0}"" not found'.format(station_name))
+            return
+        unit_key = unit.lower().replace('.', '')
+        for row in reader:
+            dateRow = row.get('Datum Zeit', '')
+            if len(dateRow):
+                try:
+                    date = parser.parse(dateRow, dayfirst=True)
+                    if timezone.is_naive(date):
+                        try:
+                            date = timezone.make_aware(date, self.tz)
+                        except NonExistentTimeError as e:
+                            self.stderr.write(str(e))
+                except ValueError:
+                    self.stderr.write('Failed to parse date "{0}"'.format(dateRow))
+                    continue
+
+                value = row[(' ' + station_name + ' ' + unit).encode('iso-8859-1')].strip()
+
+                if value.find(',') > -1:
+                    value = float(value.replace(',', '.'))
+                is_float = isinstance(value, float)
+                if is_float or (value.find('g/m') == -1 and value.find('n. def.') == -1):
+                    IndicatedValue.objects.update_or_create(date_created=date,
+                                measuring_point=station, defaults={unit_key: float(value)})
 
     @property
     def active_values(self):

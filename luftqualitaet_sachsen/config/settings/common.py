@@ -177,9 +177,9 @@ class Common(Configuration):
 
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-    GRAPPELLI_ADMIN_TITLE = 'Luftqualität Sachsen Admin'
+    GRAPPELLI_ADMIN_TITLE = 'Luftqualität Deutschland Admin'
 
-    EMAIL_SUBJECT_PREFIX = '[Luftqualität Sachsen]'
+    EMAIL_SUBJECT_PREFIX = '[Luftqualität Deutschland]'
     DEFAULT_FROM_EMAIL = 'noreply@example.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
