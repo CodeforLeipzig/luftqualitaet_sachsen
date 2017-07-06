@@ -120,9 +120,9 @@ class Common(Configuration):
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
         os.path.join(BaseDir.BASE_DIR, 'static'),
-        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'ekko-lightbox', 'dist'),
-        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'c3'),
-        os.path.join(BaseDir.BASE_DIR, 'bower_components', 'd3'),
+        os.path.join(os.path.dirname(BaseDir.BASE_DIR), 'node_modules', 'ekko-lightbox', 'dist'),
+        os.path.join(os.path.dirname(BaseDir.BASE_DIR), 'node_modules', 'c3'),
+        os.path.join(os.path.dirname(BaseDir.BASE_DIR), 'node_modules', 'd3'),
     )
 
     STATICFILES_FINDERS = (

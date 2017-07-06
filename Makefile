@@ -40,11 +40,11 @@ help:
 
 install:
 	pip install -U --no-deps -r requirements/prod.txt
-	bower install
+	yarn install --pure-lockfile
 
 install-dev:
 	pip install -U --no-deps -r requirements/dev.txt
-	bower install
+	yarn install --pure-lockfile
 
 install-test:
 	pip install -U --no-deps -r requirements/test.txt

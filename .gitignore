@@ -1,11 +1,11 @@
 .vagrant/
 .cache
 .coverage
-bower_components
 docs/_build
 envs/*
 !envs/dev
 htmlcov
 media
+node_modules
 static_root
 *.pyc

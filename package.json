@@ -1,0 +1,13 @@
+{
+  "name": "luftqualitaet_sachsen",
+  "version": "1.0.0",
+  "description": "Eine übersichtliche Darstellung der Messwerte aller sächsischen Messstationen zur Luftqualität. Zu jeder Messstation werden die Daten detailliert als Tabelle und Diagramm dargestellt.",
+  "repository": "https://github.com/CodeforLeipzig/luftqualitaet_sachsen.git",
+  "homepage": "https://github.com/CodeforLeipzig/luftqualitaet_sachsen",
+  "author": "OK Lab Leipzig",
+  "license": "BSD",
+  "dependencies": {
+    "c3": "~0.4.10",
+    "ekko-lightbox": "~3.3.0"
+  }
+}
